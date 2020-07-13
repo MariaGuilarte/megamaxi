@@ -85,16 +85,19 @@
             <ul class="nav navbar-nav float-right">
               <notification :notifications="notifications"></notification>
               <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
-
-
-
-
-
               @if( Auth::check() )
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{Auth::user()->nombre }} {{Auth::user()->apellido }}</span></div><span><img class="round" src="recursos/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"></span>
+                <div class="user-nav d-sm-flex d-none"><span id="navbar-username" class="user-name text-bold-600">{{Auth::user()->nombre }} {{Auth::user()->apellido }} </span></div>
+                <span onclick="document.querySelector('#user-dropdown-menu').classList.toggle('show')">
+                  <img id="navbar-user-profile-img" class="round" src="recursos/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40">
+                </span>
               </a>
-              <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
+              <div class="dropdown-menu dropdown-menu-right" id="user-dropdown-menu">
+                <a class="dropdown-item" href="page-user-profile.html">
+                  <i class="feather icon-user"></i> 
+                  Edit Profile
+                </a>
+                <a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
                 <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
               </div>
             </li>

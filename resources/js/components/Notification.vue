@@ -30,7 +30,7 @@
               </div>
               <div class="media-body" v-if="item.ingresos">
                 <h6 class="primary media-heading">{{item.ingresos.msj}}!</h6>
-                <span class="username">{{ item.usuario.nombre + ' ' + item.usuario.apellido}}</span>
+                <span v-if="item.usuario" class="username">{{ item.usuario.nombre + ' ' + item.usuario.apellido}}</span>
                 <small class="notification-text"> Se ha registrado {{item.ingresos.numero}} ingresos</small>
               </div>
               <small>
@@ -47,7 +47,7 @@
 
                 <div class="media-body">
                   <h6 class="success media-heading red darken-1">{{item.ventas.msj}}!</h6>
-                  <span class="username">{{ item.usuario.nombre + ' ' + item.usuario.apellido}}</span>
+                  <span v-if="item.usuario" class="username">{{ item.usuario.nombre + ' ' + item.usuario.apellido}}</span>
                   <small class="notification-text">Se ha registrado {{item.ventas.numero}} ventas.</small>
                 </div>
 

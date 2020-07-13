@@ -370,15 +370,12 @@
 
     },
     methods : {
-
      listargeneral(){
+        let me  = this;
+        var url = '/usuario/cambiosgeneral';
+        axios.get(url).then(function (response) {
 
-      let me=this;
-      var url= '/usuario/cambiosgeneral';
-
-      axios.get(url).then(function (response) {
-
-        var respuesta= response.data;
+        var respuesta = response.data;
 
         me.general = respuesta.usuarios;
 
@@ -405,6 +402,9 @@ actualizargeneral(){
     'password':this.password,
     'id': this.general[0].id
   }).then(function (response) {
+
+    document.querySelector('#navbar-username').innerText = me.general[0].nombre + " " + me.general[0].apellido;
+    console.log(me.general[0].nombre + " " + me.general[0].apellido );
 
     swal(
       'Actualizado!',

@@ -111,7 +111,7 @@ class IngresoController extends Controller
         $arregloDatos = [
                         'ventas'   => ['numero' => $numVentas, 'msj'   => 'Ventas'],
                         'ingresos' => ['numero' => $numIngresos, 'msj' => 'Ingresos'],
-                        'usuario' =>  ['nombre' => $usuario->nombre, 'apellido' => $usuario->apellido]        
+                        'usuario'  =>  ['nombre' => $usuario->nombre, 'apellido' => $usuario->apellido]        
         ];
         
         $allUsers = User::where('idrol', 1)->get();

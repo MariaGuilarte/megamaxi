@@ -64,3 +64,12 @@ Vue.use(Vuelidate)
   }
 
 });
+
+$('#main-menu-navigation .nav-item, .bookmark-icons li').click(function(e){
+  $('#main-menu-navigation li, #main-menu-navigation li a').removeClass('active');
+  $(this).addClass('active');
+});
+
+$('#charts-nav-item').click(function(e){
+  $( $(this).data('original-title') ).addClass('active');
+});

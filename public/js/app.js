@@ -3127,6 +3127,8 @@ __webpack_require__.r(__webpack_exports__);
         'password': this.password,
         'id': this.general[0].id
       }).then(function (response) {
+        document.querySelector('#navbar-username').innerText = me.general[0].nombre + " " + me.general[0].apellido;
+        console.log(me.general[0].nombre + " " + me.general[0].apellido);
         swal('Actualizado!', 'El registro se ha actualizado de forma exitosa.', 'success');
       })["catch"](function (error) {
         console.log(error);
@@ -4593,9 +4595,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -73832,7 +73831,7 @@ var render = function() {
                       attrs: {
                         src:
                           "recursos/app-assets/images/elements/decore-left.png",
-                        alt: "\n            card-img-left"
+                        alt: "\n                  card-img-left"
                       }
                     }),
                     _vm._v(" "),
@@ -73841,7 +73840,7 @@ var render = function() {
                       attrs: {
                         src:
                           "recursos/app-assets/images/elements/decore-right.png",
-                        alt: "\n            card-img-right"
+                        alt: "card-img-right"
                       }
                     }),
                     _vm._v(" "),
@@ -73850,7 +73849,7 @@ var render = function() {
                     _c("div", { staticClass: "text-center" }, [
                       _c("h1", { staticClass: "mb-2 text-white" }, [
                         _vm._v(
-                          "\n                                        \t\tBienvenido\n                                        "
+                          "\n                      Bienvenido\n                    "
                         )
                       ]),
                       _vm._v(" "),
@@ -74251,15 +74250,17 @@ var render = function() {
                                     [_vm._v(_vm._s(item.ingresos.msj) + "!")]
                                   ),
                                   _vm._v(" "),
-                                  _c("span", { staticClass: "username" }, [
-                                    _vm._v(
-                                      _vm._s(
-                                        item.usuario.nombre +
-                                          " " +
-                                          item.usuario.apellido
-                                      )
-                                    )
-                                  ]),
+                                  item.usuario
+                                    ? _c("span", { staticClass: "username" }, [
+                                        _vm._v(
+                                          _vm._s(
+                                            item.usuario.nombre +
+                                              " " +
+                                              item.usuario.apellido
+                                          )
+                                        )
+                                      ])
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c(
                                     "small",
@@ -74323,15 +74324,17 @@ var render = function() {
                                 [_vm._v(_vm._s(item.ventas.msj) + "!")]
                               ),
                               _vm._v(" "),
-                              _c("span", { staticClass: "username" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    item.usuario.nombre +
-                                      " " +
-                                      item.usuario.apellido
-                                  )
-                                )
-                              ]),
+                              item.usuario
+                                ? _c("span", { staticClass: "username" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        item.usuario.nombre +
+                                          " " +
+                                          item.usuario.apellido
+                                      )
+                                    )
+                                  ])
+                                : _vm._e(),
                               _vm._v(" "),
                               _c(
                                 "small",
@@ -92233,6 +92236,13 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       me.notifications.unshift(notification);
     });
   }
+});
+$('#main-menu-navigation .nav-item, .bookmark-icons li').click(function (e) {
+  $('#main-menu-navigation li, #main-menu-navigation li a').removeClass('active');
+  $(this).addClass('active');
+});
+$('#charts-nav-item').click(function (e) {
+  $($(this).data('original-title')).addClass('active');
 });
 
 /***/ }),
