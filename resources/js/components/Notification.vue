@@ -22,41 +22,25 @@
       </div>
 
       <div v-if="notifications.length">
-        <li class="scrollable-container media-list" v-for="item in listar" :key="item.id">
+        <li class="scrollable-container media-list" v-for="item in notifications" :key="item.id">
           <a class="d-flex justify-content-between" href="javascript:void(0)">
             <div class="media d-flex align-items-start">
               <div class="media-left">
-                <i class="feather icon-plus-square font-medium-5 primary"></i>
+                <i class="feather icon-plus-square font-medium-5 primary" v-if="item.data.datos.type=='ingresos'"></i>
+                <i class="feather icon-download-cloud font-medium-5 success" v-else></i>
               </div>
-              <div class="media-body" v-if="item.ingresos">
-                <h6 class="primary media-heading">{{item.ingresos.msj}}!</h6>
-                <span v-if="item.usuario" class="username">{{ item.usuario.nombre + ' ' + item.usuario.apellido}}</span>
-                <small class="notification-text"> Se ha registrado {{item.ingresos.numero}} ingresos</small>
+              <div class="media-body">
+                <h6 class="primary media-heading" v-if="item.data.datos.type=='ingresos'">{{item.data.datos.type}}!</h6>
+                <h6 class="success media-heading red darken-1" v-else>{{item.data.datos.type}}!</h6>
+                <span v-if="item.data.datos.usuario" class="username">{{ item.data.datos.usuario.nombre + ' ' + item.data.datos.usuario.apellido}}</span>
+                <small class="notification-text"> Se ha registrado {{item.data.datos.numero}} ingresos</small>
               </div>
               <small>
-                <span class="time-ago">{{ timeAgo }}</span>
-                <span @click="markAsRead(notifications[0].id)" class="mark-as-read">Marcar como leído</span>
+                <span class="time-ago">{{ item.time_ago }}</span>
+                <span @click="$emit('notificationread',item.id)" class="mark-as-read">Marcar como leído</span>
               </small>
               </div>
             </a>
-            <a class="d-flex justify-content-between" href="javascript:void(0)">
-              <div class="media d-flex align-items-start">
-                <div class="media-left">
-                  <i class="feather icon-download-cloud font-medium-5 success"></i>
-                </div>
-
-                <div class="media-body">
-                  <h6 class="success media-heading red darken-1">{{item.ventas.msj}}!</h6>
-                  <span v-if="item.usuario" class="username">{{ item.usuario.nombre + ' ' + item.usuario.apellido}}</span>
-                  <small class="notification-text">Se ha registrado {{item.ventas.numero}} ventas.</small>
-                </div>
-
-                <small>
-                  <span class="time-ago">{{ timeAgo }}</span>
-                  <span @click="markAsRead(notifications[0].id)" class="mark-as-read">Marcar como leído</span>
-                </small>
-                </div>
-              </a>
             </li>
           </div>
           <div v-else>
@@ -68,22 +52,7 @@
 
     <script>
      export default{
-      props : ['notifications'],
-      computed:{
-        listar: function(){
-          return this.notifications.map(n => n.data.datos)
-        },
-        timeAgo(){
-          return this.notifications.length ? this.notifications[0].time_ago : ''
-        }
-      },
-      methods : {
-        markAsRead(id){
-          axios.post(`/notifications/${id}/markAsRead`).then(response=>{
-            this.notifications = this.notifications.filter(f=>f.id != id)
-          })
-        }
-      }
+      props: ['notifications'],
     }
   </script>
   <style lang="scss">

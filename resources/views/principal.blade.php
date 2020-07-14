@@ -83,7 +83,7 @@
 
             </div>
             <ul class="nav navbar-nav float-right">
-              <notification :notifications="notifications"></notification>
+              <notification :notifications="notifications" @notificationread="markAsRead"></notification>
               <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
               @if( Auth::check() )
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">

@@ -49,6 +49,14 @@ Vue.use(Vuelidate)
     menu : 0,
     notifications: []
   },
+  methods:{
+    markAsRead(id){
+      console.log("Working");
+      axios.post(`/notifications/${id}/markAsRead`).then(response=>{
+        this.notifications = this.notifications.filter(f=>f.id != id)
+      })
+    }
+  },
   created(){
     let me = this;
     axios.post('notification/get').then(function(response){

@@ -18,6 +18,7 @@ Route::get('/main', function () {
 
 Route::get('/dashboard', 'DashboardController')->name('dashboard');
 Route::post('/notification/get','NotificationController@get');
+Route::get('/notification/get','NotificationController@get');
 
 Route::get('/rol', 'RolController@index');
 Route::get('/rol/selectrol', 'RolController@selectRol');
