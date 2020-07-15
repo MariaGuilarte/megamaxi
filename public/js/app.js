@@ -3067,25 +3067,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3128,7 +3109,6 @@ __webpack_require__.r(__webpack_exports__);
         'id': this.general[0].id
       }).then(function (response) {
         document.querySelector('#navbar-username').innerText = me.general[0].nombre + " " + me.general[0].apellido;
-        console.log(me.general[0].nombre + " " + me.general[0].apellido);
         swal('Actualizado!', 'El registro se ha actualizado de forma exitosa.', 'success');
       })["catch"](function (error) {
         console.log(error);
@@ -70729,14 +70709,14 @@ var render = function() {
                   _vm.listado == 0
                     ? _c("div", [
                         _c("li", { staticClass: "breadcrumb-item active" }, [
-                          _vm._v(" Configuración General\n                  ")
+                          _vm._v(" Configuración General\n                    ")
                         ])
                       ])
                     : _vm.listado == 1
                     ? _c("div", [
                         _c("li", { staticClass: "breadcrumb-item active" }, [
                           _vm._v(
-                            " Configuración de contraseña\n                  "
+                            " Configuración de contraseña\n                    "
                           )
                         ])
                       ])
@@ -70744,14 +70724,14 @@ var render = function() {
                     ? _c("div", [
                         _c("li", { staticClass: "breadcrumb-item active" }, [
                           _vm._v(
-                            " Configuración de Información adicional\n                  "
+                            " Configuración de Información adicional\n                    "
                           )
                         ])
                       ])
                     : _c("div", [
                         _c("li", { staticClass: "breadcrumb-item active" }, [
                           _vm._v(
-                            " Configuración de Redes Sociales\n                  "
+                            " Configuración de Redes Sociales\n                    "
                           )
                         ])
                       ])
@@ -70791,7 +70771,9 @@ var render = function() {
                         _c("i", {
                           staticClass: "feather icon-globe mr-50 font-medium-3"
                         }),
-                        _vm._v("\n                  General\n                ")
+                        _vm._v(
+                          "\n                    General\n                  "
+                        )
                       ]
                     )
                   ]),
@@ -70818,7 +70800,7 @@ var render = function() {
                           staticClass: "feather icon-lock mr-50 font-medium-3"
                         }),
                         _vm._v(
-                          "\n                  Cambiar Contraseña\n                "
+                          "\n                    Cambiar Contraseña\n                  "
                         )
                       ]
                     )
@@ -70846,7 +70828,7 @@ var render = function() {
                           staticClass: "feather icon-info mr-50 font-medium-3"
                         }),
                         _vm._v(
-                          "\n                  Información Adicional\n                "
+                          "\n                    Información Adicional\n                  "
                         )
                       ]
                     )
@@ -70874,7 +70856,7 @@ var render = function() {
                           staticClass: "feather icon-camera mr-50 font-medium-3"
                         }),
                         _vm._v(
-                          "\n                  Redes Sociales\n                "
+                          "\n                    Redes Sociales\n                  "
                         )
                       ]
                     )
@@ -71178,7 +71160,7 @@ var render = function() {
                                         {
                                           staticClass:
                                             "btn btn-primary mr-sm-1 mb-1 mb-sm-0",
-                                          attrs: { type: "submit" },
+                                          attrs: { type: "button" },
                                           on: {
                                             click: function($event) {
                                               return _vm.actualizargeneral()
@@ -71274,7 +71256,7 @@ var staticRenderFns = [
         _c("p", { staticClass: "text-muted ml-75 mt-50" }, [
           _c("small", [
             _vm._v(
-              "Allowed JPG, GIF or PNG. Max\n                            size of\n                          800kB"
+              "Allowed JPG, GIF or PNG. Max\n                  size of\n                  800kB"
             )
           ])
         ])
@@ -71342,11 +71324,7 @@ var staticRenderFns = [
                   _c(
                     "label",
                     { attrs: { for: "account-retype-new-password" } },
-                    [
-                      _vm._v(
-                        "Repita su nueva contraseña\n                              "
-                      )
-                    ]
+                    [_vm._v("Repita su nueva contraseña\n            ")]
                   ),
                   _vm._v(" "),
                   _c("input", {
@@ -71618,11 +71596,7 @@ var staticRenderFns = [
                     _c(
                       "option",
                       { attrs: { value: "The Dark Knight", selected: "" } },
-                      [
-                        _vm._v(
-                          "The Dark Knight\n                              "
-                        )
-                      ]
+                      [_vm._v("The Dark Knight\n")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -71670,7 +71644,7 @@ var staticRenderFns = [
                     staticClass: "btn btn-primary mr-sm-1 mb-1 mb-sm-0",
                     attrs: { type: "submit" }
                   },
-                  [_vm._v("Save\n                          changes")]
+                  [_vm._v("Save\nchanges")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -71823,7 +71797,7 @@ var staticRenderFns = [
                     staticClass: "btn btn-primary mr-sm-1 mb-1 mb-sm-0",
                     attrs: { type: "submit" }
                   },
-                  [_vm._v("Save\n                          changes")]
+                  [_vm._v("Save\nchanges")]
                 ),
                 _vm._v(" "),
                 _c(
