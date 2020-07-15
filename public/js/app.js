@@ -4421,6 +4421,8 @@ __webpack_require__.r(__webpack_exports__);
         me.precio = 0;
         me.arrayDetalle = [];
         swal('Registrado!', 'El registro de este ingreso se ha guardado con éxito.', 'success');
+        console.log("Income Stored");
+        me.$emit('incomestored');
       })["catch"](function (error) {
         console.log(error);
       });
@@ -7443,6 +7445,7 @@ __webpack_require__.r(__webpack_exports__);
         me.descuento = 0;
         me.arrayDetalle = [];
         swal('Registrado!', 'El registro de esta venta se ha guardado con éxito.', 'success');
+        me.$emit('salestored');
       })["catch"](function (error) {
         console.log(error);
       });
@@ -92115,10 +92118,17 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     notifications: []
   },
   methods: {
+    fetchNotifications: function fetchNotifications() {
+      var me = this;
+      axios.post('notification/get').then(function (response) {
+        me.notifications = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     markAsRead: function markAsRead(id) {
       var _this = this;
 
-      console.log("Working");
       axios.post("/notifications/".concat(id, "/markAsRead")).then(function (response) {
         _this.notifications = _this.notifications.filter(function (f) {
           return f.id != id;
@@ -92128,11 +92138,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   },
   created: function created() {
     var me = this;
-    axios.post('notification/get').then(function (response) {
-      me.notifications = response.data;
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    me.fetchNotifications();
     var userId = $('meta[name="userId"]').attr('content');
     Echo["private"]('App.User' + userId).notification(function (notification) {
       me.notifications.unshift(notification);

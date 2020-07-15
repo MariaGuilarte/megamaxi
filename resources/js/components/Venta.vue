@@ -106,7 +106,7 @@
                     <button type="button"  class="btn btn-icon btn-sm" title="Anular Venta" @click="desactivarVenta(venta.id)">
                       <i class="fa fa-ban"></i>
                     </button>
-
+                    
                     <button type="button"class="btn btn-icon btn-sm" title="Reporte de Venta" @click="pdfVenta(venta.id)" >
                       <i class="fa fa-clipboard"></i>
                     </button> 
@@ -152,67 +152,67 @@
           </div> 
         </div>
       </div>
-
-
+      
+      
       
       <div class="col-md-3">
         <label for="">Impuestos(*)</label>
-         <div v-if="impuesto==0 || !impuesto ">
-        <input type="number" step = "any" class="form-control is-invalid" style="background-color:#0B1044" placeholder="0.18" v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">      
+        <div v-if="impuesto==0 || !impuesto ">
+          <input type="number" step = "any" class="form-control is-invalid" style="background-color:#0B1044" placeholder="0.18" v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">      
+        </div>
+        <div v-else>
+          <input type="number" step = "any" class="form-control is-valid" style="background-color:#0B1044"  v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        </div>
       </div>
-      <div v-else>
-        <input type="number" step = "any" class="form-control is-valid" style="background-color:#0B1044"  v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-      </div>
-    </div>
-    
-
-
+      
+      
+      
       <div class="col-md-4">
         <div class="form-group">
           <label>Tipo Comprobante(*)</label>
-
+          
           <div v-if="tipo_comprobante==0 || !tipo_comprobante " >
-          <select class="custom-select is-invalid" v-model="tipo_comprobante" style="background-color:#0B1044">
-            <option value="0" disabled>Seleccione</option>
-            <option value="BOLETA">boleta</option>
-            <option value="FACTURA">factura</option>
-            <option value="TICKET">ticket</option>
-          </select>
+            <select class="custom-select is-invalid" v-model="tipo_comprobante" style="background-color:#0B1044">
+              <option value="0" disabled>Seleccione</option>
+              <option value="BOLETA">boleta</option>
+              <option value="FACTURA">factura</option>
+              <option value="TICKET">ticket</option>
+            </select>
           </div>
-
-           <div v-else>
-             <select class=" custom-select is-valid" v-model="tipo_comprobante" style="background-color:#0B1044">
-            <option value="0" disabled>Seleccione</option>
-            <option value="BOLETA">boleta</option>
-            <option value="FACTURA">factura</option>
-            <option value="TICKET">ticket</option>
-          </select>
-           </div>
+          
+          <div v-else>
+            <select class=" custom-select is-valid" v-model="tipo_comprobante" style="background-color:#0B1044">
+              <option value="0" disabled>Seleccione</option>
+              <option value="BOLETA">boleta</option>
+              <option value="FACTURA">factura</option>
+              <option value="TICKET">ticket</option>
+            </select>
+          </div>
         </div>  
       </div>
-
-
+      
+      
       <div class="col-md-4">
         <div class="form-group">
           <label>Serie Comprobante(*)</label>
           <div v-if="serie_comprobante==0 || !serie_comprobante " >
-          <input type="number" class="form-control is-invalid" style="background-color:#0B1044" v-model="serie_comprobante" step = "any" placeholder="000x" maxlength="7" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
-        </div>
-        <div v-else>
-          <input type="number" class="form-control is-valid" style="background-color:#0B1044" v-model="serie_comprobante" step = "any" placeholder="000x" maxlength="7" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
-        </div>
+            <input type="number" class="form-control is-invalid" style="background-color:#0B1044" v-model="serie_comprobante" step = "any" placeholder="000x" maxlength="7" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
+          </div>
+          <div v-else>
+            <input type="number" class="form-control is-valid" style="background-color:#0B1044" v-model="serie_comprobante" step = "any" placeholder="000x" maxlength="7" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
+          </div>
         </div>  
       </div>
-
+      
       <div class="col-md-4">
         <div class="form-group">
           <label>Numero Comprobante(*)</label>
           <div v-if="num_comprobante==0 || !num_comprobante " >
-          <input type="number" class="form-control is-invalid" step = "any" style="background-color:#0B1044" v-model="num_comprobante" placeholder="000x" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
-        </div>
-        <div v-else>
-          <input type="number" class="form-control is-valid" step = "any" style="background-color:#0B1044" v-model="num_comprobante" placeholder="000x" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
-        </div>
+            <input type="number" class="form-control is-invalid" step = "any" style="background-color:#0B1044" v-model="num_comprobante" placeholder="000x" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
+          </div>
+          <div v-else>
+            <input type="number" class="form-control is-valid" step = "any" style="background-color:#0B1044" v-model="num_comprobante" placeholder="000x" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
+          </div>
         </div>  
       </div>
     </div>
@@ -325,15 +325,15 @@
 <!---fin de section formularios----->
 
 
-  <!--inicio de section formularios---->
-  <template v-else-if="listado==2">
-        <section>
-          <div class="form-group row border">
-            <div class="col-md-9">
-              <div class="form-group select2-border data-border-colo">
-                <label for="">Cliente</label><br>
-                <p v-text="nombre_clientes"></p>
-                <p v-text="apellido_clientes"></p>
+<!--inicio de section formularios---->
+<template v-else-if="listado==2">
+  <section>
+    <div class="form-group row border">
+      <div class="col-md-9">
+        <div class="form-group select2-border data-border-colo">
+          <label for="">Cliente</label><br>
+          <p v-text="nombre_clientes"></p>
+          <p v-text="apellido_clientes"></p>
         </div>
       </div>
       <div class="col-md-3">
@@ -349,7 +349,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Serie Comprobante</label>
-         <p v-text="serie_comprobante"></p>
+          <p v-text="serie_comprobante"></p>
         </div>  
       </div>
       <div class="col-md-4">
@@ -374,7 +374,7 @@
           </thead>
           <tbody v-if="arrayDetalle.length">
             <tr  v-for="detalle in arrayDetalle" :key="detalle.id" style="background-color: #0B1044;">
-             
+              
               <td v-text="detalle.producto"></td>
               <td v-text="detalle.precio"></td>
               <td v-text="detalle.cantidad"></td>
@@ -490,47 +490,46 @@ import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import datables from 'datatables'
 export default {
-  data (){
-    return {
-      venta_id: 0,
-      idcliente: 0,
-      nombre_clientes:'',
-      apellido_clientes:'',
-      tipo_comprobante : '0',
-      serie_comprobante : '',
-      num_comprobante : '',
-      impuesto : 0.18,
-      total : 0.0,
-      totalimpuesto:0.0,
-      totalparcial:0.0,
-      arrayVenta : [],
-      arrayDetalle:[],
-      listado: 1,
-      modal : 0,
-      tituloModal : '',
-      tipoAccion : 0,
-      arrayCliente:[],
-      arrayProducto:[],
-      idproducto:0,
-      codigo:'',
-      producto:'',
-      precio:0,
-      cantidad:0,
-      descuento:0,
-      stock:0
-    }
-  },
-  components:{
-    vSelect
-  },
-  computed:{
-     validarventa(){
-      this.arrayDetalle.map(function(x){
-       if(x.cantidad>x.stock){
-         
-       }
-      });
-      
+  data (){ return {
+    venta_id: 0,
+    idcliente: 0,
+    nombre_clientes:'',
+    apellido_clientes:'',
+    tipo_comprobante : '0',
+    serie_comprobante : '',
+    num_comprobante : '',
+    impuesto : 0.18,
+    total : 0.0,
+    totalimpuesto:0.0,
+    totalparcial:0.0,
+    arrayVenta : [],
+    arrayDetalle:[],
+    listado: 1,
+    modal : 0,
+    tituloModal : '',
+    tipoAccion : 0,
+    arrayCliente:[],
+    arrayProducto:[],
+    idproducto:0,
+    codigo:'',
+    producto:'',
+    precio:0,
+    cantidad:0,
+    descuento:0,
+    stock:0
+  }
+},
+components:{
+  vSelect
+},
+computed:{
+  validarventa(){
+    this.arrayDetalle.map(function(x){
+      if(x.cantidad>x.stock){
+        
+      }
+    });
+    
     return  this.idcliente==0 || !this.impuesto || this.impuesto==0 ||  !this.serie_comprobante || !this.num_comprobante || this.arrayDetalle.length<=0 ; 
   },
   calcularTotal: function(){
@@ -623,8 +622,8 @@ methods : {
       });//fin del metodo datatable
     });//fin de llave y parentesis funcion
   },//fin del metodo table2
-
-
+  
+  
   //--------------------------------------------------------------------
   //metodo listar ingreso
   listarVenta(){
@@ -635,7 +634,7 @@ methods : {
       me.arrayVenta = respuesta.ventas.data;
       me.mytable()
       $("#example").dataTable().fnDestroy();
-
+      
       // me.pagination= respuesta.pagination;
       //me.arrayUsuario = response.data;
     })
@@ -688,302 +687,302 @@ methods : {
   //Metodo agregar detalle
   agregarDetalle(){
     let me=this;
-
- if(me.idproducto==0 || me.cantidad==0 || me.precio==0){
-
+    
+    if(me.idproducto==0 || me.cantidad==0 || me.precio==0){
+      
     }else{
-    if(me.encuentra(me.idproducto)) {
-      swal({
-        type: 'error',
-        title: 'Error',
-        text: 'Este producto ya se encuentra agregado!',
-      })
-    }else
-    {
-      if(me.cantidad>me.stock){
-         swal({
-        type: 'error',
-        title: 'Error',
-        text: 'No hay stock disponible para esta cantidad de productos!',
-      })
-      }else{
-           
-        me.arrayDetalle.push({
-        idproducto: me.idproducto,
-        producto: me.producto,
-        cantidad: me.cantidad,
-        precio: me.precio,
-        descuento: me.descuento,
-        stock: me.stock
-            });
-            me.codigo="";
-            me.idproducto=0;
-            me.producto="";
-            me.cantidad=0;
-            me.precio=0;
-            me.descuento=0;
-            me.stock=0;
-
-
-      }}}
-  },
-  //inicio metodo encuentra
-  encuentra(id){
-    var sw=0;
-    for(var i=0; i<this.arrayDetalle.length; i++){
-      if(this.arrayDetalle[i].idproducto==id){
-        sw=true;
-      }
-    }
-    return sw;
-  },
-  //-----------------------------------------------------------------------------------
-  //inicio de registar Venta
-  registrarVenta(){
-    let me = this;
-    axios.post('/venta/registrar',{
-      'idcliente': this.idcliente.id,
-      'impuesto': this.impuesto,
-      'tipo_comprobante': this.tipo_comprobante,
-      'serie_comprobante': this.serie_comprobante,
-      'num_comprobante': this.num_comprobante,
-      'total': this.total,
-      'data': this.arrayDetalle
-    }).then(function (response) {
-      
-      me.listarVenta();
-      me.ocultarDetalle();
-      me.idcliente=0;
-      me.tipo_comprobante='BOLETA';
-      me.serie_comprobante='';
-      me.num_comprobante='';
-      me.impuesto=0.18;
-      me.total=0.0;
-      me.idproducto=0;
-      me.producto='';
-      me.cantidad=0;
-      me.precio=0;
-      me.stock=0;
-      me.codigo='';
-      me.descuento=0;
-      me.arrayDetalle=[];
-      swal(
-      'Registrado!',
-      'El registro de esta venta se ha guardado con éxito.',
-      'success'
-        )
-      
-    }).catch(function (error) {
-      console.log(error);
-    });
-  },
-  //fin del registrar ingreso
-
-  //----------------------------------------------------------------------
-            // Metodo Desasctivar venta
-               desactivarVenta(id){
-               swal({
-                title: '¿Estás seguro que deseas anular esta venta?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
-                reverseButtons: true
-                }).then((result) => {
-                if (result.value) {
-                    let me = this;
-
-                    axios.put('/venta/desactivar',{
-                        'id': id
-                    }).then(function (response) {
-                        $("#example").dataTable().fnDestroy();
-                        me.listarVenta();
-                        swal(
-                        'Anulado!',
-                        'El registro de esta venta ha sido anulado con éxito.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                    
-                    
-                } else if (
-                    // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
-                ) {
-                    
-                }
-                }) 
-            },
+      if(me.encuentra(me.idproducto)) {
+        swal({
+          type: 'error',
+          title: 'Error',
+          text: 'Este producto ya se encuentra agregado!',
+        })
+      }else
+      {
+        if(me.cantidad>me.stock){
+          swal({
+            type: 'error',
+            title: 'Error',
+            text: 'No hay stock disponible para esta cantidad de productos!',
+          })
+        }else{
           
+          me.arrayDetalle.push({
+            idproducto: me.idproducto,
+            producto: me.producto,
+            cantidad: me.cantidad,
+            precio: me.precio,
+            descuento: me.descuento,
+            stock: me.stock
+          });
+          me.codigo="";
+          me.idproducto=0;
+          me.producto="";
+          me.cantidad=0;
+          me.precio=0;
+          me.descuento=0;
+          me.stock=0;
+          
+          
+        }}}
+      },
+      //inicio metodo encuentra
+      encuentra(id){
+        var sw=0;
+        for(var i=0; i<this.arrayDetalle.length; i++){
+          if(this.arrayDetalle[i].idproducto==id){
+            sw=true;
+          }
+        }
+        return sw;
+      },
+      //-----------------------------------------------------------------------------------
+      //inicio de registar Venta
+      registrarVenta(){
+        let me = this;
+        axios.post('/venta/registrar',{
+          'idcliente': this.idcliente.id,
+          'impuesto': this.impuesto,
+          'tipo_comprobante': this.tipo_comprobante,
+          'serie_comprobante': this.serie_comprobante,
+          'num_comprobante': this.num_comprobante,
+          'total': this.total,
+          'data': this.arrayDetalle
+        }).then(function (response) {
+          
+          me.listarVenta();
+          me.ocultarDetalle();
+          me.idcliente=0;
+          me.tipo_comprobante='BOLETA';
+          me.serie_comprobante='';
+          me.num_comprobante='';
+          me.impuesto=0.18;
+          me.total=0.0;
+          me.idproducto=0;
+          me.producto='';
+          me.cantidad=0;
+          me.precio=0;
+          me.stock=0;
+          me.codigo='';
+          me.descuento=0;
+          me.arrayDetalle=[];
+          swal(
+            'Registrado!',
+            'El registro de esta venta se ha guardado con éxito.',
+            'success'
+          )
+          me.$emit('salestored')
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
+      //fin del registrar ingreso
+      
+      //----------------------------------------------------------------------
+      // Metodo Desasctivar venta
+      desactivarVenta(id){
+        swal({
+          title: '¿Estás seguro que deseas anular esta venta?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar!',
+          cancelButtonText: 'Cancelar',
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger',
+          buttonsStyling: false,
+          reverseButtons: true
+        }).then((result) => {
+          if (result.value) {
+            let me = this;
+            
+            axios.put('/venta/desactivar',{
+              'id': id
+            }).then(function (response) {
+              $("#example").dataTable().fnDestroy();
+              me.listarVenta();
+              swal(
+                'Anulado!',
+                'El registro de esta venta ha sido anulado con éxito.',
+                'success'
+              )
+            }).catch(function (error) {
+              console.log(error);
+            });
+            
+            
+          } else if (
+            // Read more about handling dismissals
+            result.dismiss === swal.DismissReason.cancel
+          ) {
+            
+          }
+        }) 
+      },
+      
       //fin del metodo anular venta
-  //--------------------------------------------------------------------
-  //metodo listar Producto
-  listarProducto(){
-    let me=this;
-    var url= '/producto/listarproductoventa';
-    axios.get(url).then(function (response) {
-      var respuesta= response.data;
-      me.arrayProducto = respuesta.productos.data;
-      me.mytable2()
-      // me.pagination= respuesta.pagination;
-      //me.arrayUsuario = response.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  },
-  //-----------------------------------------------------------------------------------
-  //metodo agregar detalle modal
-  agregarDetalleModal(data=[]){
-    let me=this;
-
-    if(me.encuentra(data['id'])) {
-      swal({
-        type: 'error',
-        title: 'Error',
-        text: 'Este producto ya se encuentra agregado!',
-      })
-    }else
-    {
-      me.arrayDetalle.push({
-        idproducto: data['id'],
-        producto: data['nombre'],
-        cantidad: 1,
-        precio: data['precio_venta'],
-        descuento:0,
-        stock:data['stock']
-      });
+      //--------------------------------------------------------------------
+      //metodo listar Producto
+      listarProducto(){
+        let me=this;
+        var url= '/producto/listarproductoventa';
+        axios.get(url).then(function (response) {
+          var respuesta= response.data;
+          me.arrayProducto = respuesta.productos.data;
+          me.mytable2()
+          // me.pagination= respuesta.pagination;
+          //me.arrayUsuario = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      },
+      //-----------------------------------------------------------------------------------
+      //metodo agregar detalle modal
+      agregarDetalleModal(data=[]){
+        let me=this;
+        
+        if(me.encuentra(data['id'])) {
+          swal({
+            type: 'error',
+            title: 'Error',
+            text: 'Este producto ya se encuentra agregado!',
+          })
+        }else
+        {
+          me.arrayDetalle.push({
+            idproducto: data['id'],
+            producto: data['nombre'],
+            cantidad: 1,
+            precio: data['precio_venta'],
+            descuento:0,
+            stock:data['stock']
+          });
+          me.idproducto=0;
+          me.producto='';
+          me.cantidad=0;
+          me.precio=0;
+        }
+      },
+      //metodo abrir modal
+      abrirModal(){
+        this.arrayProducto=[]; 
+        this.modal = 1;
+        this.tituloModal = 'Seleccione uno o mas productos';
+        $("#example2").dataTable().fnDestroy();
+        
+      },//fin del metodo abrir modal
+      //-------------------------------------------------------------
+      //pdfventa
+      pdfVenta(id){
+        window.open('http://localhost:8000/venta/pdf/'+ id +','+'_blank');
+      },
+      
+      //------------------------------------------------------------------------
+      //mostrar detalle
+      mostrarDetalle(){
+        let me = this;
+        me.listado=0;
+        me.idproveedor=0;
+        me.tipo_comprobante='0';
+        me.serie_comprobante='';
+        me.num_comprobante='';
+        me.impuesto=0.18;
+        me.total=0.0;
         me.idproducto=0;
         me.producto='';
         me.cantidad=0;
         me.precio=0;
+        me.arrayDetalle=[];
+        
+      },
+      //fin de mostrar detalle
+      //inicio de ocultar detale
+      ocultarDetalle(){
+        this.listado=1;
+        var refreshedDataFromTheServer = this.listarVenta();
+        var myTable = $('#example').DataTable();
+        myTable.clear().rows.add(refreshedDataFromTheServer).draw();
+        
+        
+      },
+      //fin de ocultar detalle
+      //inicio de mostrar ingreso
+      mostrarVenta(id){
+        let me=this;
+        me.listado=2;
+        
+        
+        //Obtener datos de ingresos
+        var arrayVentaT=[];
+        var url= '/venta/obtenerCabeceras?id='+id;
+        axios.get(url).then(function (response) {
+          var respuesta= response.data;
+          arrayVentaT = respuesta.venta;
+          me.nombre_clientes = arrayVentaT[0]['nombre_clientes'];
+          me.apellido_clientes = arrayVentaT[0]['apellido_clientes'];
+          me.tipo_comprobante = arrayVentaT[0]['tipo_comprobante'];
+          me.serie_comprobante = arrayVentaT[0]['serie_comprobante'];
+          me.num_comprobante = arrayVentaT[0]['num_comprobante'];
+          me.impuesto = arrayVentaT[0]['impuesto'];
+          me.total = arrayVentaT[0]['total'];
+          
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        
+        
+        //Obtener datos de detalles
+        var urld= '/venta/obtenerDetalles?id='+id;
+        axios.get(urld).then(function (response) {
+          var respuesta= response.data;
+          me.arrayDetalle = respuesta.detalles;
+          
+          
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      },
+      //fin de mostrar venta
+      //-----------------------------------------------------------------------------
+      //metodo cerrar modal
+      cerrarModal(){
+        this.modal = 0;
+        this.tituloModal = '';
+      },//fin del metodo cerrar modal
+    },//fin de metodos
+    //------------------------------------------------------------------------------------
+    //inicio de mounted
+    created(){
+      this.listarVenta();
+    },
+    mounted() {
+      //this.listarIngreso();
+      this.selectCliente();
     }
-  },
-  //metodo abrir modal
-  abrirModal(){
-    this.arrayProducto=[]; 
-    this.modal = 1;
-    this.tituloModal = 'Seleccione uno o mas productos';
-    $("#example2").dataTable().fnDestroy();
-
-  },//fin del metodo abrir modal
-  //-------------------------------------------------------------
-   //pdfventa
-   pdfVenta(id){
-  window.open('http://localhost:8000/venta/pdf/'+ id +','+'_blank');
-   },
-
-  //------------------------------------------------------------------------
-  //mostrar detalle
-  mostrarDetalle(){
-    let me = this;
-    me.listado=0;
-    me.idproveedor=0;
-    me.tipo_comprobante='0';
-    me.serie_comprobante='';
-    me.num_comprobante='';
-    me.impuesto=0.18;
-    me.total=0.0;
-    me.idproducto=0;
-    me.producto='';
-    me.cantidad=0;
-    me.precio=0;
-    me.arrayDetalle=[];
-    
-  },
-  //fin de mostrar detalle
-  //inicio de ocultar detale
-  ocultarDetalle(){
-    this.listado=1;
-    var refreshedDataFromTheServer = this.listarVenta();
-    var myTable = $('#example').DataTable();
-    myTable.clear().rows.add(refreshedDataFromTheServer).draw();
-
-
-  },
-  //fin de ocultar detalle
-  //inicio de mostrar ingreso
-  mostrarVenta(id){
-    let me=this;
-    me.listado=2;
-
-
-    //Obtener datos de ingresos
-    var arrayVentaT=[];
-    var url= '/venta/obtenerCabeceras?id='+id;
-    axios.get(url).then(function (response) {
-      var respuesta= response.data;
-      arrayVentaT = respuesta.venta;
-      me.nombre_clientes = arrayVentaT[0]['nombre_clientes'];
-      me.apellido_clientes = arrayVentaT[0]['apellido_clientes'];
-      me.tipo_comprobante = arrayVentaT[0]['tipo_comprobante'];
-      me.serie_comprobante = arrayVentaT[0]['serie_comprobante'];
-      me.num_comprobante = arrayVentaT[0]['num_comprobante'];
-      me.impuesto = arrayVentaT[0]['impuesto'];
-      me.total = arrayVentaT[0]['total'];
-   
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-
-    //Obtener datos de detalles
-    var urld= '/venta/obtenerDetalles?id='+id;
-    axios.get(urld).then(function (response) {
-      var respuesta= response.data;
-      me.arrayDetalle = respuesta.detalles;
-
-   
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  },
-  //fin de mostrar venta
-  //-----------------------------------------------------------------------------
-  //metodo cerrar modal
-  cerrarModal(){
-    this.modal = 0;
-    this.tituloModal = '';
-  },//fin del metodo cerrar modal
-},//fin de metodos
-//------------------------------------------------------------------------------------
-//inicio de mounted
-created(){
-  this.listarVenta();
-},
-mounted() {
-  //this.listarIngreso();
-  this.selectCliente();
-}
-//fin de mounted
-}//fin de export default
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-</script>
-<style type="text/css">
-  .modal-content{
-    width: 100% !important;
-    width: 500px;
-    height:500px;
-  }
-  .mostrar{
-    display: list-item !important;
-    opacity: 1 !important;
-    background-color: #3c29297a !important;
-  }
-  @media(min-width: 600px){
-    .btnagregar{
-      margin-top: 2rem;   
+    //fin de mounted
+  }//fin de export default
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  </script>
+  <style type="text/css">
+    .modal-content{
+      width: 100% !important;
+      width: 500px;
+      height:500px;
     }
-  }
-</style>
+    .mostrar{
+      display: list-item !important;
+      opacity: 1 !important;
+      background-color: #3c29297a !important;
+    }
+    @media(min-width: 600px){
+      .btnagregar{
+        margin-top: 2rem;   
+      }
+    }
+  </style>

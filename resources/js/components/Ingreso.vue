@@ -145,67 +145,67 @@
           </div> 
         </div>
       </div>
-
-
+      
+      
       
       <div class="col-md-3">
         <label for="">Impuestos(*)</label>
-         <div v-if="impuesto==0 || !impuesto ">
-        <input type="number" step = "any" class="form-control is-invalid" style="background-color:#0B1044" placeholder="0.18" v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">      
+        <div v-if="impuesto==0 || !impuesto ">
+          <input type="number" step = "any" class="form-control is-invalid" style="background-color:#0B1044" placeholder="0.18" v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">      
+        </div>
+        <div v-else>
+          <input type="number" step = "any" class="form-control is-valid" style="background-color:#0B1044"  v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        </div>
       </div>
-      <div v-else>
-        <input type="number" step = "any" class="form-control is-valid" style="background-color:#0B1044"  v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-      </div>
-    </div>
-    
-
-
+      
+      
+      
       <div class="col-md-4">
         <div class="form-group">
           <label>Tipo Comprobante(*)</label>
-
+          
           <div v-if="tipo_comprobante==0 || !tipo_comprobante " >
-          <select class="custom-select is-invalid" v-model="tipo_comprobante" style="background-color:#0B1044">
-            <option value="0" disabled>Seleccione</option>
-            <option value="BOLETA">boleta</option>
-            <option value="FACTURA">factura</option>
-            <option value="TICKET">ticket</option>
-          </select>
+            <select class="custom-select is-invalid" v-model="tipo_comprobante" style="background-color:#0B1044">
+              <option value="0" disabled>Seleccione</option>
+              <option value="BOLETA">boleta</option>
+              <option value="FACTURA">factura</option>
+              <option value="TICKET">ticket</option>
+            </select>
           </div>
-
-           <div v-else>
-             <select class=" custom-select is-valid" v-model="tipo_comprobante" style="background-color:#0B1044">
-            <option value="0" disabled>Seleccione</option>
-            <option value="BOLETA">boleta</option>
-            <option value="FACTURA">factura</option>
-            <option value="TICKET">ticket</option>
-          </select>
-           </div>
+          
+          <div v-else>
+            <select class=" custom-select is-valid" v-model="tipo_comprobante" style="background-color:#0B1044">
+              <option value="0" disabled>Seleccione</option>
+              <option value="BOLETA">boleta</option>
+              <option value="FACTURA">factura</option>
+              <option value="TICKET">ticket</option>
+            </select>
+          </div>
         </div>  
       </div>
-
-
+      
+      
       <div class="col-md-4">
         <div class="form-group">
           <label>Serie Comprobante(*)</label>
           <div v-if="serie_comprobante==0 || !serie_comprobante " >
-          <input type="number" class="form-control is-invalid" style="background-color:#0B1044" v-model="serie_comprobante" step = "any" placeholder="000x" maxlength="7" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
-        </div>
-        <div v-else>
-          <input type="number" class="form-control is-valid" style="background-color:#0B1044" v-model="serie_comprobante" step = "any" placeholder="000x" maxlength="7" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
-        </div>
+            <input type="number" class="form-control is-invalid" style="background-color:#0B1044" v-model="serie_comprobante" step = "any" placeholder="000x" maxlength="7" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
+          </div>
+          <div v-else>
+            <input type="number" class="form-control is-valid" style="background-color:#0B1044" v-model="serie_comprobante" step = "any" placeholder="000x" maxlength="7" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
+          </div>
         </div>  
       </div>
-
+      
       <div class="col-md-4">
         <div class="form-group">
           <label>Numero Comprobante(*)</label>
           <div v-if="num_comprobante==0 || !num_comprobante " >
-          <input type="number" class="form-control is-invalid" step = "any" style="background-color:#0B1044" v-model="num_comprobante" placeholder="000x" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
-        </div>
-        <div v-else>
-          <input type="number" class="form-control is-valid" step = "any" style="background-color:#0B1044" v-model="num_comprobante" placeholder="000x" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
-        </div>
+            <input type="number" class="form-control is-invalid" step = "any" style="background-color:#0B1044" v-model="num_comprobante" placeholder="000x" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
+          </div>
+          <div v-else>
+            <input type="number" class="form-control is-valid" step = "any" style="background-color:#0B1044" v-model="num_comprobante" placeholder="000x" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" @keypress="restrictChars($event)">
+          </div>
         </div>  
       </div>
     </div>
@@ -305,14 +305,14 @@
 <!---fin de section formularios----->
 
 
-  <!--inicio de section formularios---->
-  <template v-else-if="listado==2">
-        <section>
-          <div class="form-group row border">
-            <div class="col-md-9">
-              <div class="form-group select2-border data-border-colo">
-                <label for="">Proveedor</label><br>
-                <p v-text="nombre_proveedores"></p>
+<!--inicio de section formularios---->
+<template v-else-if="listado==2">
+  <section>
+    <div class="form-group row border">
+      <div class="col-md-9">
+        <div class="form-group select2-border data-border-colo">
+          <label for="">Proveedor</label><br>
+          <p v-text="nombre_proveedores"></p>
         </div>
       </div>
       <div class="col-md-3">
@@ -328,7 +328,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Serie Comprobante</label>
-         <p v-text="serie_comprobante"></p>
+          <p v-text="serie_comprobante"></p>
         </div>  
       </div>
       <div class="col-md-4">
@@ -352,7 +352,7 @@
           </thead>
           <tbody v-if="arrayDetalle.length">
             <tr  v-for="detalle in arrayDetalle" :key="detalle.id" style="background-color: #0B1044;">
-             
+              
               <td v-text="detalle.producto"></td>
               <td v-text="detalle.precio"></td>
               <td v-text="detalle.cantidad"></td>
@@ -467,38 +467,37 @@ import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import datables from 'datatables'
 export default {
-  data (){
-    return {
-      ingreso_id: 0,
-      idproveedor: 0,
-      nombre_proveedores:'',
-      tipo_comprobante : '0',
-      serie_comprobante : '',
-      num_comprobante : '',
-      impuesto : 0.18,
-      total : 0.0,
-      totalimpuesto:0.0,
-      totalparcial:0.0,
-      arrayIngreso : [],
-      arrayDetalle:[],
-      listado: 1,
-      modal : 0,
-      tituloModal : '',
-      tipoAccion : 0,
-      arrayProveedor:[],
-      arrayProducto:[],
-      idproducto:0,
-      codigo:'',
-      producto:'',
-      precio:0,
-      cantidad:0
-    }
-  },
-  components:{
-    vSelect
-  },
-  computed:{
-     validaringreso(){
+  data(){ return {
+    ingreso_id: 0,
+    idproveedor: 0,
+    nombre_proveedores:'',
+    tipo_comprobante : '0',
+    serie_comprobante : '',
+    num_comprobante : '',
+    impuesto : 0.18,
+    total : 0.0,
+    totalimpuesto:0.0,
+    totalparcial:0.0,
+    arrayIngreso : [],
+    arrayDetalle:[],
+    listado: 1,
+    modal : 0,
+    tituloModal : '',
+    tipoAccion : 0,
+    arrayProveedor:[],
+    arrayProducto:[],
+    idproducto:0,
+    codigo:'',
+    producto:'',
+    precio:0,
+    cantidad:0
+  }
+},
+components:{
+  vSelect
+},
+computed:{
+  validaringreso(){
     return  this.idproveedor==0 || !this.impuesto || this.impuesto==0 ||        !this.serie_comprobante || !this.num_comprobante || this.arrayDetalle.length<=0 ; 
   },
   calcularTotal: function(){
@@ -591,8 +590,8 @@ methods : {
       });//fin del metodo datatable
     });//fin de llave y parentesis funcion
   },//fin del metodo table2
-
-
+  
+  
   //--------------------------------------------------------------------
   //metodo listar ingreso
   listarIngreso(){
@@ -653,59 +652,181 @@ methods : {
   //Metodo agregar detalle
   agregarDetalle(){
     let me=this;
-
- if(me.idproducto==0 || me.cantidad==0 || me.precio==0){
-
-    }else{
-    if(me.encuentra(me.idproducto)) {
-      swal({
-        type: 'error',
-        title: 'Error',
-        text: 'Este producto ya se encuentra agregado!',
-      })
-    }else
-    {
-      me.arrayDetalle.push({
-        idproducto: me.idproducto,
-        producto: me.producto,
-        cantidad: me.cantidad,
-        precio: me.precio
-      });
-      me.codigo="";
-      me.idproducto=0;
-      me.producto="";
-      me.cantidad=0;
-      me.precio=0;
-    }}
-  },
-  //inicio metodo encuentra
-  encuentra(id){
-    var sw=0;
-    for(var i=0; i<this.arrayDetalle.length; i++){
-      if(this.arrayDetalle[i].idproducto==id){
-        sw=true;
-      }
-    }
-    return sw;
-  },
-  //-----------------------------------------------------------------------------------
-  //inicio de registar Ingreso
-  registrarIngreso(){
-    let me = this;
-    axios.post('/ingreso/registrar',{
-      'idproveedor': this.idproveedor.id,
-      'impuesto': this.impuesto,
-      'tipo_comprobante': this.tipo_comprobante,
-      'serie_comprobante': this.serie_comprobante,
-      'num_comprobante': this.num_comprobante,
-      'total': this.total,
-      'data': this.arrayDetalle
-    }).then(function (response) {
+    
+    if(me.idproducto==0 || me.cantidad==0 || me.precio==0){
       
-      me.listarIngreso();
-      me.ocultarDetalle();
+    }else{
+      if(me.encuentra(me.idproducto)) {
+        swal({
+          type: 'error',
+          title: 'Error',
+          text: 'Este producto ya se encuentra agregado!',
+        })
+      }else
+      {
+        me.arrayDetalle.push({
+          idproducto: me.idproducto,
+          producto: me.producto,
+          cantidad: me.cantidad,
+          precio: me.precio
+        });
+        me.codigo="";
+        me.idproducto=0;
+        me.producto="";
+        me.cantidad=0;
+        me.precio=0;
+      }}
+    },
+    //inicio metodo encuentra
+    encuentra(id){
+      var sw=0;
+      for(var i=0; i<this.arrayDetalle.length; i++){
+        if(this.arrayDetalle[i].idproducto==id){
+          sw=true;
+        }
+      }
+      return sw;
+    },
+    //-----------------------------------------------------------------------------------
+    //inicio de registar Ingreso
+    registrarIngreso(){
+      let me = this;
+      axios.post('/ingreso/registrar',{
+        'idproveedor': this.idproveedor.id,
+        'impuesto': this.impuesto,
+        'tipo_comprobante': this.tipo_comprobante,
+        'serie_comprobante': this.serie_comprobante,
+        'num_comprobante': this.num_comprobante,
+        'total': this.total,
+        'data': this.arrayDetalle
+      }).then(function (response) {
+        
+        me.listarIngreso();
+        me.ocultarDetalle();
+        me.idproveedor=0;
+        me.tipo_comprobante='BOLETA';
+        me.serie_comprobante='';
+        me.num_comprobante='';
+        me.impuesto=0.18;
+        me.total=0.0;
+        me.idproducto=0;
+        me.producto='';
+        me.cantidad=0;
+        me.precio=0;
+        me.arrayDetalle=[];
+        swal(
+          'Registrado!',
+          'El registro de este ingreso se ha guardado con éxito.',
+          'success'
+        )
+        console.log("Income Stored");
+        me.$emit('incomestored')
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    //fin del registrar ingreso
+    
+    //----------------------------------------------------------------------
+    // Metodo Desasctivar Ingresos
+    desactivarIngreso(id){
+      swal({
+        title: '¿Estás seguro que deseas anular este ingreso?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar!',
+        cancelButtonText: 'Cancelar',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          let me = this;
+          
+          axios.put('/ingreso/desactivar',{
+            'id': id
+          }).then(function (response) {
+            $("#example").dataTable().fnDestroy();
+            me.listarIngreso();
+            swal(
+              'Anulado!',
+              'El registro de este ingreso ha sido anulado con éxito.',
+              'success'
+            )
+          }).catch(function (error) {
+            console.log(error);
+          });
+          
+          
+        } else if (
+          // Read more about handling dismissals
+          result.dismiss === swal.DismissReason.cancel
+        ) {
+          
+        }
+      }) 
+    },
+    
+    //fin del metodo anular ingreso
+    //--------------------------------------------------------------------
+    //metodo listar Producto
+    listarProducto(){
+      let me=this;
+      var url= '/producto/listarproducto';
+      axios.get(url).then(function (response) {
+        var respuesta= response.data;
+        me.arrayProducto = respuesta.productos.data;
+        me.mytable2()
+        // me.pagination= respuesta.pagination;
+        //me.arrayUsuario = response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    //-----------------------------------------------------------------------------------
+    //metodo agregar detalle modal
+    agregarDetalleModal(data=[]){
+      let me=this;
+      
+      if(me.encuentra(data['id'])) {
+        swal({
+          type: 'error',
+          title: 'Error',
+          text: 'Este producto ya se encuentra agregado!',
+        })
+      }else
+      {
+        me.arrayDetalle.push({
+          idproducto: data['id'],
+          producto: data['nombre'],
+          cantidad: 1,
+          precio: 1
+        });
+        me.idproducto=0;
+        me.producto='';
+        me.cantidad=0;
+        me.precio=0;
+      }
+    },
+    //metodo abrir modal
+    abrirModal(){
+      this.arrayProducto=[]; 
+      this.modal = 1;
+      this.tituloModal = 'Seleccione uno o mas productos';
+      $("#example2").dataTable().fnDestroy();
+      
+    },//fin del metodo abrir modal
+    //------------------------------------------------------------------------
+    //mostrar detalle
+    mostrarDetalle(){
+      let me = this;
+      me.listado=0;
       me.idproveedor=0;
-      me.tipo_comprobante='BOLETA';
+      me.tipo_comprobante='0';
       me.serie_comprobante='';
       me.num_comprobante='';
       me.impuesto=0.18;
@@ -715,197 +836,76 @@ methods : {
       me.cantidad=0;
       me.precio=0;
       me.arrayDetalle=[];
-      swal(
-      'Registrado!',
-      'El registro de este ingreso se ha guardado con éxito.',
-      'success'
-        )
       
-    }).catch(function (error) {
-      console.log(error);
-    });
-  },
-  //fin del registrar ingreso
-
-  //----------------------------------------------------------------------
-            // Metodo Desasctivar Ingresos
-               desactivarIngreso(id){
-               swal({
-                title: '¿Estás seguro que deseas anular este ingreso?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
-                reverseButtons: true
-                }).then((result) => {
-                if (result.value) {
-                    let me = this;
-
-                    axios.put('/ingreso/desactivar',{
-                        'id': id
-                    }).then(function (response) {
-                        $("#example").dataTable().fnDestroy();
-                        me.listarIngreso();
-                        swal(
-                        'Anulado!',
-                        'El registro de este ingreso ha sido anulado con éxito.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                    
-                    
-                } else if (
-                    // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
-                ) {
-                    
-                }
-                }) 
-            },
-          
-      //fin del metodo anular ingreso
-  //--------------------------------------------------------------------
-  //metodo listar Producto
-  listarProducto(){
-    let me=this;
-    var url= '/producto/listarproducto';
-    axios.get(url).then(function (response) {
-      var respuesta= response.data;
-      me.arrayProducto = respuesta.productos.data;
-      me.mytable2()
-      // me.pagination= respuesta.pagination;
-      //me.arrayUsuario = response.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  },
-  //-----------------------------------------------------------------------------------
-  //metodo agregar detalle modal
-  agregarDetalleModal(data=[]){
-    let me=this;
-
-    if(me.encuentra(data['id'])) {
-      swal({
-        type: 'error',
-        title: 'Error',
-        text: 'Este producto ya se encuentra agregado!',
+    },
+    //fin de mostrar detalle
+    //inicio de ocultar detale
+    ocultarDetalle(){
+      this.listado=1;
+      var refreshedDataFromTheServer = this.listarIngreso();
+      var myTable = $('#example').DataTable();
+      myTable.clear().rows.add(refreshedDataFromTheServer).draw();
+      
+      
+    },
+    //fin de ocultar detalle
+    //inicio de mostrar ingreso
+    mostrarIngreso(id){
+      let me=this;
+      me.listado=2;
+      
+      
+      //Obtener datos de ingresos
+      var arrayIngresoT=[];
+      var url= '/ingreso/obtenerCabeceras?id='+id;
+      axios.get(url).then(function (response) {
+        var respuesta= response.data;
+        arrayIngresoT = respuesta.ingreso;
+        me.nombre_proveedores = arrayIngresoT[0]['nombre_proveedores'];
+        me.tipo_comprobante = arrayIngresoT[0]['tipo_comprobante'];
+        me.serie_comprobante = arrayIngresoT[0]['serie_comprobante'];
+        me.num_comprobante = arrayIngresoT[0]['num_comprobante'];
+        me.impuesto = arrayIngresoT[0]['impuesto'];
+        me.total = arrayIngresoT[0]['total'];
+        
+        
       })
-    }else
-    {
-      me.arrayDetalle.push({
-        idproducto: data['id'],
-        producto: data['nombre'],
-        cantidad: 1,
-        precio: 1
+      .catch(function (error) {
+        console.log(error);
       });
-        me.idproducto=0;
-        me.producto='';
-        me.cantidad=0;
-        me.precio=0;
-    }
+      
+      
+      //Obtener datos de detalles
+      var urld= '/ingreso/obtenerDetalles?id='+id;
+      axios.get(urld).then(function (response) {
+        var respuesta= response.data;
+        me.arrayDetalle = respuesta.detalles;
+        
+        
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    //fin de mostrar ingreso
+    //-----------------------------------------------------------------------------
+    //metodo cerrar modal
+    cerrarModal(){
+      this.modal = 0;
+      this.tituloModal = '';
+    },//fin del metodo cerrar modal
+  },//fin de metodos
+  //------------------------------------------------------------------------------------
+  //inicio de mounted
+  created(){
+    this.listarIngreso();
   },
-  //metodo abrir modal
-  abrirModal(){
-    this.arrayProducto=[]; 
-    this.modal = 1;
-    this.tituloModal = 'Seleccione uno o mas productos';
-    $("#example2").dataTable().fnDestroy();
-
-  },//fin del metodo abrir modal
-  //------------------------------------------------------------------------
-  //mostrar detalle
-  mostrarDetalle(){
-    let me = this;
-    me.listado=0;
-    me.idproveedor=0;
-    me.tipo_comprobante='0';
-    me.serie_comprobante='';
-    me.num_comprobante='';
-    me.impuesto=0.18;
-    me.total=0.0;
-    me.idproducto=0;
-    me.producto='';
-    me.cantidad=0;
-    me.precio=0;
-    me.arrayDetalle=[];
-    
-  },
-  //fin de mostrar detalle
-  //inicio de ocultar detale
-  ocultarDetalle(){
-    this.listado=1;
-    var refreshedDataFromTheServer = this.listarIngreso();
-    var myTable = $('#example').DataTable();
-    myTable.clear().rows.add(refreshedDataFromTheServer).draw();
-
-
-  },
-  //fin de ocultar detalle
-  //inicio de mostrar ingreso
-  mostrarIngreso(id){
-    let me=this;
-    me.listado=2;
-
-
-    //Obtener datos de ingresos
-    var arrayIngresoT=[];
-    var url= '/ingreso/obtenerCabeceras?id='+id;
-    axios.get(url).then(function (response) {
-      var respuesta= response.data;
-      arrayIngresoT = respuesta.ingreso;
-      me.nombre_proveedores = arrayIngresoT[0]['nombre_proveedores'];
-      me.tipo_comprobante = arrayIngresoT[0]['tipo_comprobante'];
-      me.serie_comprobante = arrayIngresoT[0]['serie_comprobante'];
-      me.num_comprobante = arrayIngresoT[0]['num_comprobante'];
-      me.impuesto = arrayIngresoT[0]['impuesto'];
-      me.total = arrayIngresoT[0]['total'];
-   
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-
-    //Obtener datos de detalles
-    var urld= '/ingreso/obtenerDetalles?id='+id;
-    axios.get(urld).then(function (response) {
-      var respuesta= response.data;
-      me.arrayDetalle = respuesta.detalles;
-
-   
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  },
-  //fin de mostrar ingreso
-  //-----------------------------------------------------------------------------
-  //metodo cerrar modal
-  cerrarModal(){
-    this.modal = 0;
-    this.tituloModal = '';
-  },//fin del metodo cerrar modal
-},//fin de metodos
-//------------------------------------------------------------------------------------
-//inicio de mounted
-created(){
-  this.listarIngreso();
-},
-mounted() {
-  //this.listarIngreso();
-  this.selectProveedor();
-}
-//fin de mounted
+  mounted() {
+    //this.listarIngreso();
+    this.selectProveedor();
+  }
+  //fin de mounted
 }//fin de export default
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 </script>

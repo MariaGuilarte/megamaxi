@@ -50,8 +50,15 @@ Vue.use(Vuelidate)
     notifications: []
   },
   methods:{
+    fetchNotifications(){
+      let me = this
+      axios.post('notification/get').then(function(response){
+        me.notifications = response.data;	
+      }).catch(function(error){
+        console.log(error);
+      });
+    },
     markAsRead(id){
-      console.log("Working");
       axios.post(`/notifications/${id}/markAsRead`).then(response=>{
         this.notifications = this.notifications.filter(f=>f.id != id)
       })
@@ -59,11 +66,7 @@ Vue.use(Vuelidate)
   },
   created(){
     let me = this;
-    axios.post('notification/get').then(function(response){
-      me.notifications = response.data;	
-    }).catch(function(error){
-      console.log(error);
-    });
+    me.fetchNotifications()
 
     var userId = $('meta[name="userId"]').attr('content');
     Echo.private('App.User'+userId).notification((notification)=>{

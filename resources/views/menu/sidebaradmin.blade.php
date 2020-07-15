@@ -13,19 +13,12 @@
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
       <li class=" nav-item"><a href=""><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Escritorio</span></a>
         <ul class="menu-content">
-
           <li   @click="menu=1" ><a href="#" ><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Analytics">Usuarios Activos</span></a>
           </li>
-
-
-
-
           <li @click="menu=2"><a href="#"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="eCommerce">Roles de Usuario</span></a>
           </li>
-
           <li @click="menu=3"><a href="#"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="eCommerce">Usuarios Inactivos</span></a>
           </li>
-
         </ul>
       </li>
       <li class=" navigation-header"><span>Gestión</span>
@@ -54,11 +47,6 @@
       </li>
       <li @click="menu=14" id="charts-menu-item" class="nav-item"><a href="#"><i class="feather icon-bar-chart-2"></i><span class="menu-title" data-i18n="Calender">Gráficos</span></a>
       </li>
-
-
-
-
-
       <li class=" navigation-header"><span>Soporte</span>
       </li>
       <li @click="menu=15" class=" nav-item"><a href="#"><i class="feather icon-settings"></i><span class="menu-title" data-i18n="Documentation">Configuración</span></a>
@@ -68,11 +56,7 @@
       <li class=" nav-item"><a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="feather icon-life-buoy"></i><span class="menu-title" data-i18n="Raise Support">Cerrar Sesion</span></a>
         <form id="logout-form" action="{{route('logout')}}" method="Post" style="display: none;"> 
           {{csrf_field()}}
-
         </form>
-
-
-
       </li>
     </ul>
   </div>
