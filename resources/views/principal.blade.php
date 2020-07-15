@@ -88,7 +88,7 @@
               @if( Auth::check() )
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                 <div class="user-nav d-sm-flex d-none"><span id="navbar-username" class="user-name text-bold-600">{{Auth::user()->nombre }} {{Auth::user()->apellido }} </span></div>
-                <span onclick="document.getElementById('user-dropdown-menu').classList.toggle('show')">
+                <span>
                   <img id="navbar-user-profile-img" class="round" src="recursos/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40">
                 </span>
               </a>
