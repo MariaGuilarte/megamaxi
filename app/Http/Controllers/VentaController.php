@@ -85,10 +85,11 @@ class VentaController extends Controller
       }
       $fechaActual = date('Y-m-d');
       $numVentas   = DB::table('ventas')->whereDate('fecha_hora',$fechaActual)->count();
+      DB::table('notifications')->where('data->datos->type', 'ventas')->where('data->datos->usuario->id', $usuario->id)->delete();
       $notification_data = [
         'type' => 'ventas',
         'numero' => $numVentas,
-        'usuario'  => ['nombre' => $usuario->nombre, 'apellido' => $usuario->apellido]        
+        'usuario'  => ['id'=>$usuario->id, 'nombre'=>$usuario->nombre, 'apellido'=>$usuario->apellido] 
       ];
       Notification::send(User::all(), new NotifyAdmin($notification_data));
       DB::commit();

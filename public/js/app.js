@@ -74253,7 +74253,8 @@ var render = function() {
                                   _vm._v(
                                     " Se ha registrado " +
                                       _vm._s(item.data.datos.numero) +
-                                      " ingresos"
+                                      " " +
+                                      _vm._s(item.data.datos.type)
                                   )
                                 ]
                               )

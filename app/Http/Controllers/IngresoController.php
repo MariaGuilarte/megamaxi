@@ -79,8 +79,9 @@ class IngresoController extends Controller
       $notification_ingresos = [
         'type' => 'ingresos',
         'numero' => $numIngresos,
-        'usuario'  => ['nombre' => $usuario->nombre, 'apellido' => $usuario->apellido]        
+        'usuario'  => ['id'=>$usuario->id, 'nombre'=>$usuario->nombre, 'apellido'=>$usuario->apellido]
       ];
+      DB::table('notifications')->where('data->datos->type', 'ingresos')->where('data->datos->usuario->id', $usuario->id)->delete();
       Notification::send(User::all(), new NotifyAdmin($notification_ingresos));
     } catch(Exception $e){
       DB::rollBack();

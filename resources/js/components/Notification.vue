@@ -33,7 +33,7 @@
                 <h6 class="primary media-heading" v-if="item.data.datos.type=='ingresos'">{{item.data.datos.type}}!</h6>
                 <h6 class="success media-heading red darken-1" v-else>{{item.data.datos.type}}!</h6>
                 <span v-if="item.data.datos.usuario" class="username">{{ item.data.datos.usuario.nombre + ' ' + item.data.datos.usuario.apellido}}</span>
-                <small class="notification-text"> Se ha registrado {{item.data.datos.numero}} ingresos</small>
+                <small class="notification-text"> Se ha registrado {{item.data.datos.numero}} {{item.data.datos.type}}</small>
               </div>
               <small>
                 <span class="time-ago">{{ item.time_ago }}</span>
