@@ -81,8 +81,7 @@ class IngresoController extends Controller
         'numero' => $numIngresos,
         'usuario'  => ['nombre' => $usuario->nombre, 'apellido' => $usuario->apellido]        
       ];
-      $users = User::where('idrol',1)->get();
-      Notification::send($users, new NotifyAdmin($notification_ingresos));
+      Notification::send(User::all(), new NotifyAdmin($notification_ingresos));
     } catch(Exception $e){
       DB::rollBack();
     }

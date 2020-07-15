@@ -90,7 +90,7 @@ class VentaController extends Controller
         'numero' => $numVentas,
         'usuario'  => ['nombre' => $usuario->nombre, 'apellido' => $usuario->apellido]        
       ];
-      Notification::send(User::where('idrol',1)->get(), new NotifyAdmin($notification_data));
+      Notification::send(User::all(), new NotifyAdmin($notification_data));
       DB::commit();
     } catch(Exception $e){
       DB::rollBack();
