@@ -89,7 +89,7 @@
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                 <div class="user-nav d-sm-flex d-none"><span id="navbar-username" class="user-name text-bold-600">{{Auth::user()->nombre }} {{Auth::user()->apellido }} </span></div>
                 <span>
-                  <img id="navbar-user-profile-img" class="round" src="recursos/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40">
+                  <img id="navbar-user-profile-img" class="round" src="{{ Auth::user()->avatar }}" alt="avatar" height="40" width="40">
                 </span>
               </a>
               <div class="dropdown-menu dropdown-menu-right" id="user-dropdown-menu">

@@ -102,11 +102,9 @@
                     <button type="button"class="btn btn-icon btn-sm" title="Mostrar Detalle de Venta" @click="mostrarVenta(venta.id)" >
                       <i class="feather icon-eye"></i>
                     </button> 
-                    
                     <button type="button"  class="btn btn-icon btn-sm" title="Anular Venta" @click="desactivarVenta(venta.id)">
                       <i class="fa fa-ban"></i>
                     </button>
-                    
                     <button type="button"class="btn btn-icon btn-sm" title="Reporte de Venta" @click="pdfVenta(venta.id)" >
                       <i class="fa fa-clipboard"></i>
                     </button> 
@@ -152,25 +150,18 @@
           </div> 
         </div>
       </div>
-      
-      
-      
       <div class="col-md-3">
         <label for="">Impuestos(*)</label>
-        <div v-if="impuesto==0 || !impuesto ">
-          <input type="number" step = "any" class="form-control is-invalid" style="background-color:#0B1044" placeholder="0.18" v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">      
+        <div v-if="impuesto==0 || !impuesto || impuesto < 0">
+          <input type="number" step="any" class="form-control is-invalid" style="background-color:#0B1044" placeholder="0.18" v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">      
         </div>
         <div v-else>
-          <input type="number" step = "any" class="form-control is-valid" style="background-color:#0B1044"  v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+          <input type="number" step="any" class="form-control is-valid" style="background-color:#0B1044"  v-model="impuesto" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
       </div>
-      
-      
-      
       <div class="col-md-4">
         <div class="form-group">
           <label>Tipo Comprobante(*)</label>
-          
           <div v-if="tipo_comprobante==0 || !tipo_comprobante " >
             <select class="custom-select is-invalid" v-model="tipo_comprobante" style="background-color:#0B1044">
               <option value="0" disabled>Seleccione</option>
@@ -179,7 +170,6 @@
               <option value="TICKET">ticket</option>
             </select>
           </div>
-          
           <div v-else>
             <select class=" custom-select is-valid" v-model="tipo_comprobante" style="background-color:#0B1044">
               <option value="0" disabled>Seleccione</option>
@@ -190,8 +180,6 @@
           </div>
         </div>  
       </div>
-      
-      
       <div class="col-md-4">
         <div class="form-group">
           <label>Serie Comprobante(*)</label>
@@ -203,7 +191,6 @@
           </div>
         </div>  
       </div>
-      
       <div class="col-md-4">
         <div class="form-group">
           <label>Numero Comprobante(*)</label>
@@ -230,19 +217,19 @@
       <div class="col-md-2">
         <div class="form-group">
           <label>Precio<span style="color:red;" v-show="precio==0">(*ingrese)</span></label>
-          <input type="number"  step="any" placeholder="0.0" class="form-control"  style="background-color:#0B1044" v-model="precio">
+          <input type="number"  step="any" placeholder="0.0" class="form-control"  :class="{'is-valid': precio <= 0}" style="background-color:#0B1044" v-model="precio">
         </div>
       </div>
       <div class="col-md-2">
         <div class="form-group">
           <label>Cantidad <span style="color:red;" v-show="cantidad==0">(*ingrese)</span></label>
-          <input type="number"  placeholder="2" class="form-control" style="background-color:#0B1044"  v-model="cantidad" @keypress="restrictChars($event)">
+          <input type="number"  placeholder="2" class="form-control" :class="{'is-valid': cantidad <= 0}" style="background-color:#0B1044" v-model="cantidad" @keypress="restrictChars($event)">
         </div>
       </div>
       <div class="col-md-2">
         <div class="form-group">
           <label>Descuento </label>
-          <input type="number"  placeholder="2" class="form-control" style="background-color:#0B1044"  v-model="descuento" @keypress="restrictChars($event)">
+          <input type="number"  placeholder="2" class="form-control" :class="{'is-invalid': descuento < 0}" style="background-color:#0B1044"  v-model="descuento" @keypress="restrictChars($event)">
         </div>
       </div>
       <div class="col-md-2">
@@ -253,12 +240,13 @@
         </div>
       </div>
     </div>
+    
     <div class="form-group row border">
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-sm">
           <thead> 
             <tr>
-              <th>Opciones</th>
+              <th>Opcione</th>
               <th>Productos</th>
               <th>Precio</th>
               <th>Cantidad</th>
@@ -275,17 +263,15 @@
               </td>
               <td v-text="detalle.producto"></td>
               <td>
-                <input v-model="detalle.precio" type="number"  class="form-control"  >
+                <input v-model:number="detalle.precio" type="number" class="form-control" :class="{'is-invalid': detalle.precio <= 0}">
               </td>
               <td>
                 <span style="color:red;" v-show="detalle.cantidad > detalle.stock">Stock: {{detalle.stock}}</span>
-                <input v-model="detalle.cantidad" type="number"   class="form-control" 
-                >
+                <input v-model:number="detalle.cantidad" type="number" class="form-control" :class="{'is-invalid': detalle.cantidad <= 0}">
               </td>
               <td>
                 <span style="color:red;" v-show="detalle.descuento > (detalle.precio * detalle.cantidad)">Descuento superior</span>
-                <input v-model="detalle.descuento" type="number"   class="form-control" 
-                >
+                <input v-model:number="detalle.descuento" type="number" class="form-control" :class="{'is-invalid': detalle.descuento < 0}">
               </td>
               <td>
                 {{(detalle.precio*detalle.cantidad-detalle.descuento).toFixed(2)}}
@@ -322,10 +308,8 @@
     </div>
   </section>
 </template>
-<!---fin de section formularios----->
-
-
-<!--inicio de section formularios---->
+<!--fin de section formularios-->
+<!--inicio de section formularios-->
 <template v-else-if="listado==2">
   <section>
     <div class="form-group row border">
@@ -359,7 +343,6 @@
         </div>  
       </div>
     </div>
-    
     <div class="form-group row border">
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-sm">
@@ -374,7 +357,6 @@
           </thead>
           <tbody v-if="arrayDetalle.length">
             <tr  v-for="detalle in arrayDetalle" :key="detalle.id" style="background-color: #0B1044;">
-              
               <td v-text="detalle.producto"></td>
               <td v-text="detalle.precio"></td>
               <td v-text="detalle.cantidad"></td>
@@ -409,14 +391,13 @@
     <div class="form-group row ">
       <div class="col-md-12">
         <button type="button" class="btn btn-secondary" @click="ocultarDetalle">Cerrar</button>
-        
       </div>
     </div>
   </section>
 </template>
-<!-----fin template------>
+<!--fin template-->
 </div>
-<!--</div>---->
+<!--</div>-->
 <!--- fin del div de posicion!!!-->
 <!-- Inicio de modal-->
 <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
@@ -524,13 +505,10 @@ components:{
 },
 computed:{
   validarventa(){
-    this.arrayDetalle.map(function(x){
-      if(x.cantidad>x.stock){
-        
-      }
+    let hasInvalidItems = this.arrayDetalle.some(item => {
+      return item.cantidad <= 0 || item.precio <= 0 || item.descuento < 0
     });
-    
-    return  this.idcliente==0 || !this.impuesto || this.impuesto==0 ||  !this.serie_comprobante || !this.num_comprobante || this.arrayDetalle.length<=0 ; 
+    return  hasInvalidItems || this.idcliente ==0 || !this.impuesto || this.impuesto <= 0 ||  !this.serie_comprobante || !this.num_comprobante || this.arrayDetalle.length<=0 ; 
   },
   calcularTotal: function(){
     var resultado=0.0;
@@ -622,8 +600,6 @@ methods : {
       });//fin del metodo datatable
     });//fin de llave y parentesis funcion
   },//fin del metodo table2
-  
-  
   //--------------------------------------------------------------------
   //metodo listar ingreso
   listarVenta(){
@@ -634,7 +610,6 @@ methods : {
       me.arrayVenta = respuesta.ventas.data;
       me.mytable()
       $("#example").dataTable().fnDestroy();
-      
       // me.pagination= respuesta.pagination;
       //me.arrayUsuario = response.data;
     })
@@ -687,9 +662,7 @@ methods : {
   //Metodo agregar detalle
   agregarDetalle(){
     let me=this;
-    
     if(me.idproducto==0 || me.cantidad==0 || me.precio==0){
-      
     }else{
       if(me.encuentra(me.idproducto)) {
         swal({
@@ -706,7 +679,6 @@ methods : {
             text: 'No hay stock disponible para esta cantidad de productos!',
           })
         }else{
-          
           me.arrayDetalle.push({
             idproducto: me.idproducto,
             producto: me.producto,
@@ -722,8 +694,6 @@ methods : {
           me.precio=0;
           me.descuento=0;
           me.stock=0;
-          
-          
         }}}
       },
       //inicio metodo encuentra
@@ -749,7 +719,6 @@ methods : {
           'total': this.total,
           'data': this.arrayDetalle
         }).then(function (response) {
-          
           me.listarVenta();
           me.ocultarDetalle();
           me.idcliente=0;
@@ -777,7 +746,6 @@ methods : {
         });
       },
       //fin del registrar ingreso
-      
       //----------------------------------------------------------------------
       // Metodo Desasctivar venta
       desactivarVenta(id){
@@ -796,7 +764,6 @@ methods : {
         }).then((result) => {
           if (result.value) {
             let me = this;
-            
             axios.put('/venta/desactivar',{
               'id': id
             }).then(function (response) {
@@ -810,17 +777,13 @@ methods : {
             }).catch(function (error) {
               console.log(error);
             });
-            
-            
           } else if (
             // Read more about handling dismissals
             result.dismiss === swal.DismissReason.cancel
           ) {
-            
           }
         }) 
       },
-      
       //fin del metodo anular venta
       //--------------------------------------------------------------------
       //metodo listar Producto
@@ -842,7 +805,6 @@ methods : {
       //metodo agregar detalle modal
       agregarDetalleModal(data=[]){
         let me=this;
-        
         if(me.encuentra(data['id'])) {
           swal({
             type: 'error',
@@ -871,14 +833,12 @@ methods : {
         this.modal = 1;
         this.tituloModal = 'Seleccione uno o mas productos';
         $("#example2").dataTable().fnDestroy();
-        
       },//fin del metodo abrir modal
       //-------------------------------------------------------------
       //pdfventa
       pdfVenta(id){
         window.open('http://localhost:8000/venta/pdf/'+ id +','+'_blank');
       },
-      
       //------------------------------------------------------------------------
       //mostrar detalle
       mostrarDetalle(){
@@ -895,7 +855,6 @@ methods : {
         me.cantidad=0;
         me.precio=0;
         me.arrayDetalle=[];
-        
       },
       //fin de mostrar detalle
       //inicio de ocultar detale
@@ -904,16 +863,12 @@ methods : {
         var refreshedDataFromTheServer = this.listarVenta();
         var myTable = $('#example').DataTable();
         myTable.clear().rows.add(refreshedDataFromTheServer).draw();
-        
-        
       },
       //fin de ocultar detalle
       //inicio de mostrar ingreso
       mostrarVenta(id){
         let me=this;
         me.listado=2;
-        
-        
         //Obtener datos de ingresos
         var arrayVentaT=[];
         var url= '/venta/obtenerCabeceras?id='+id;
@@ -927,22 +882,15 @@ methods : {
           me.num_comprobante = arrayVentaT[0]['num_comprobante'];
           me.impuesto = arrayVentaT[0]['impuesto'];
           me.total = arrayVentaT[0]['total'];
-          
-          
         })
         .catch(function (error) {
           console.log(error);
         });
-        
-        
         //Obtener datos de detalles
         var urld= '/venta/obtenerDetalles?id='+id;
         axios.get(urld).then(function (response) {
           var respuesta= response.data;
           me.arrayDetalle = respuesta.detalles;
-          
-          
-          
         })
         .catch(function (error) {
           console.log(error);

@@ -2464,33 +2464,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2510,6 +2483,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
+    invalidEmail: function invalidEmail() {
+      return !(this.email && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email));
+    },
     validarCliente: function validarCliente() {
       return !this.nombre || !this.apellido || this.tipo_documento == 0 || !this.num_documento || !this.direccion || !this.telefono || !this.email;
     }
@@ -3079,11 +3055,23 @@ __webpack_require__.r(__webpack_exports__);
       usuario: '',
       idusuario: 0,
       idrol: 0,
-      password: ''
+      password: '',
+      profilePicture: null
     };
   },
-  computed: {},
+  computed: {
+    avatarUrl: function avatarUrl() {
+      if (this.general.length) {
+        return this.general[0].profile_picture.url ? this.general[0].profile_picture.url : '/img/avatar-default.png';
+      }
+
+      return this.general.usuarios.profile_picture.url ? this.general.usuarios.profile_picture.url : '/img/avatar-default.png';
+    }
+  },
   methods: {
+    changePicture: function changePicture() {
+      this.profilePicture = this.$refs.profilePictureInput[0].files[0];
+    },
     listargeneral: function listargeneral() {
       var me = this;
       var url = '/usuario/cambiosgeneral';
@@ -3098,16 +3086,20 @@ __webpack_require__.r(__webpack_exports__);
     //---------------------------------------------------------------------------------------------------------------------------------------------------------
     actualizargeneral: function actualizargeneral() {
       var me = this;
-      axios.put('/usuario/actualizarcambiosgeneral', {
-        'idrol': this.general[0].idrol,
-        'nombre': this.general[0].nombre,
-        'apellido': this.general[0].apellido,
-        'telefono': this.general[0].telefono,
-        'direccion': this.general[0].direccion,
-        'usuario': this.general[0].usuario,
-        'password': this.password,
-        'id': this.general[0].id
-      }).then(function (response) {
+      var data = new FormData();
+      data.set('nombre', me.general[0].nombre);
+      data.set('apellido', me.general[0].apellido);
+      data.set('telefono', me.general[0].telefono);
+      data.set('direccion', me.general[0].direccion);
+      data.set('usuario', me.general[0].usuario);
+      data.set('idrol', me.general[0].idrol);
+      data.set('id', me.general[0].id);
+      data.set('password', me.password);
+      data.set('_method', 'PUT');
+      data.append('profile_picture', me.profilePicture);
+      axios.post('/usuario/actualizarcambiosgeneral', data).then(function (response) {
+        me.general = response.data;
+        document.querySelector('#navbar-user-profile-img').setAttribute('src', me.avatarUrl);
         document.querySelector('#navbar-username').innerText = me.general[0].nombre + " " + me.general[0].apellido;
         swal('Actualizado!', 'El registro se ha actualizado de forma exitosa.', 'success');
       })["catch"](function (error) {
@@ -5533,45 +5525,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -5589,8 +5542,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
+    invalidEmail: function invalidEmail() {
+      return !(this.email && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email));
+    },
     validarProveedor: function validarProveedor() {
-      return !this.nombre || !this.ruc || !this.direccion || !this.telefono || !this.email;
+      return this.invalidEmail || !this.nombre || !this.ruc || !this.direccion || !this.telefono || !this.email;
     }
   },
   methods: {
@@ -7128,25 +7084,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -7186,10 +7123,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     validarventa: function validarventa() {
-      this.arrayDetalle.map(function (x) {
-        if (x.cantidad > x.stock) {}
+      var hasInvalidItems = this.arrayDetalle.some(function (item) {
+        return item.cantidad <= 0 || item.precio <= 0 || item.descuento < 0;
       });
-      return this.idcliente == 0 || !this.impuesto || this.impuesto == 0 || !this.serie_comprobante || !this.num_comprobante || this.arrayDetalle.length <= 0;
+      return hasInvalidItems || this.idcliente == 0 || !this.impuesto || this.impuesto <= 0 || !this.serie_comprobante || !this.num_comprobante || this.arrayDetalle.length <= 0;
     },
     calcularTotal: function calcularTotal() {
       var resultado = 0.0;
@@ -12098,7 +12035,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    width: 500px;\n    height:500px;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    background-color: #3c29297a !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.modal-content{\n  width: 100% !important;\n  width: 500px;\n  height:500px;\n}\n.mostrar{\n  display: list-item !important;\n  opacity: 1 !important;\n  background-color: #3c29297a !important;\n}\n", ""]);
 
 // exports
 
@@ -12155,7 +12092,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    width: 400px;\n    height:400px;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    background-color: #3c29297a !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.modal-content{\n  width: 100% !important;\n  width: 400px;\n  height:400px;\n}\n.mostrar{\n  display: list-item !important;\n  opacity: 1 !important;\n  background-color: #3c29297a !important;\n}\n", ""]);
 
 // exports
 
@@ -69933,7 +69870,7 @@ var render = function() {
                             },
                             [_c("i", { staticClass: "feather icon-edit" })]
                           ),
-                          _vm._v("  \n                                      "),
+                          _vm._v("  \n                  "),
                           _c(
                             "button",
                             {
@@ -70485,53 +70422,32 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-sm-9 " }, [
-                              !_vm.email
-                                ? _c("div", [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.email,
-                                          expression: "email"
-                                        }
-                                      ],
-                                      staticClass: "form-control is-invalid",
-                                      attrs: { type: "text" },
-                                      domProps: { value: _vm.email },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.email = $event.target.value
-                                        }
-                                      }
-                                    })
-                                  ])
-                                : _c("div", [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.email,
-                                          expression: "email"
-                                        }
-                                      ],
-                                      staticClass: "form-control is-valid",
-                                      attrs: { type: "text" },
-                                      domProps: { value: _vm.email },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.email = $event.target.value
-                                        }
-                                      }
-                                    })
-                                  ])
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.email,
+                                    expression: "email"
+                                  }
+                                ],
+                                ref: "emailInput",
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.invalidEmail,
+                                  "is-valid": !_vm.invalidEmail
+                                },
+                                attrs: { type: "email", required: "" },
+                                domProps: { value: _vm.email },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.email = $event.target.value
+                                  }
+                                }
+                              })
                             ])
                           ])
                         ])
@@ -70887,7 +70803,66 @@ var render = function() {
                               }
                             },
                             [
-                              _vm._m(0, true),
+                              _c("div", { staticClass: "media" }, [
+                                _c(
+                                  "a",
+                                  { attrs: { href: "javascript: void(0);" } },
+                                  [
+                                    _c("img", {
+                                      staticClass: "rounded mr-75",
+                                      attrs: {
+                                        src: _vm.avatarUrl,
+                                        alt: "profile image",
+                                        height: "64",
+                                        width: "64"
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "media-body mt-75" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "col-12 px-0 d-flex flex-sm-row flex-column justify-content-start"
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "btn btn-sm btn-primary ml-50 mb-50 mb-sm-0 cursor-pointer",
+                                          attrs: { for: "account-upload" }
+                                        },
+                                        [_vm._v("Upload new photo")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        ref: "profilePictureInput",
+                                        refInFor: true,
+                                        attrs: {
+                                          type: "file",
+                                          id: "account-upload",
+                                          hidden: ""
+                                        },
+                                        on: { change: _vm.changePicture }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-sm btn-outline-warning ml-50"
+                                        },
+                                        [_vm._v("Reset")]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(0, true)
+                                ])
+                              ]),
                               _vm._v(" "),
                               _c("hr"),
                               _vm._v(" "),
@@ -71210,56 +71185,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "media" }, [
-      _c("a", { attrs: { href: "javascript: void(0);" } }, [
-        _c("img", {
-          staticClass: "rounded mr-75",
-          attrs: {
-            src: "recursos/app-assets/images/portrait/small/avatar-s-12.jpg",
-            alt: "profile image",
-            height: "64",
-            width: "64"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "media-body mt-75" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "col-12 px-0 d-flex flex-sm-row flex-column justify-content-start"
-          },
-          [
-            _c(
-              "label",
-              {
-                staticClass:
-                  "btn btn-sm btn-primary ml-50 mb-50 mb-sm-0 cursor-pointer",
-                attrs: { for: "account-upload" }
-              },
-              [_vm._v("Upload new photo")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              attrs: { type: "file", id: "account-upload", hidden: "" }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-sm btn-outline-warning ml-50" },
-              [_vm._v("Reset")]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-muted ml-75 mt-50" }, [
-          _c("small", [
-            _vm._v(
-              "Allowed JPG, GIF or PNG. Max\n                  size of\n                  800kB"
-            )
-          ])
-        ])
+    return _c("p", { staticClass: "text-muted ml-75 mt-50" }, [
+      _c("small", [
+        _vm._v(
+          "Allowed JPG, GIF or PNG. Max\n                              size of\n                              800kB"
+        )
       ])
     ])
   },
@@ -71324,7 +71254,11 @@ var staticRenderFns = [
                   _c(
                     "label",
                     { attrs: { for: "account-retype-new-password" } },
-                    [_vm._v("Repita su nueva contraseña\n            ")]
+                    [
+                      _vm._v(
+                        "Repita su nueva contraseña\n                                    "
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c("input", {
@@ -71596,7 +71530,11 @@ var staticRenderFns = [
                     _c(
                       "option",
                       { attrs: { value: "The Dark Knight", selected: "" } },
-                      [_vm._v("The Dark Knight\n")]
+                      [
+                        _vm._v(
+                          "The Dark Knight\n                                    "
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
@@ -71644,7 +71582,7 @@ var staticRenderFns = [
                     staticClass: "btn btn-primary mr-sm-1 mb-1 mb-sm-0",
                     attrs: { type: "submit" }
                   },
-                  [_vm._v("Save\nchanges")]
+                  [_vm._v("Save\n                                  changes")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -71797,7 +71735,7 @@ var staticRenderFns = [
                     staticClass: "btn btn-primary mr-sm-1 mb-1 mb-sm-0",
                     attrs: { type: "submit" }
                   },
-                  [_vm._v("Save\nchanges")]
+                  [_vm._v("Save\n  changes")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -75248,7 +75186,7 @@ var render = function() {
                             },
                             [_c("i", { staticClass: "feather icon-edit" })]
                           ),
-                          _vm._v("  \n                                      "),
+                          _vm._v("  \n                  "),
                           _c(
                             "button",
                             {
@@ -75586,53 +75524,32 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-sm-9 " }, [
-                              !_vm.email
-                                ? _c("div", [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.email,
-                                          expression: "email"
-                                        }
-                                      ],
-                                      staticClass: "form-control is-invalid",
-                                      attrs: { type: "email" },
-                                      domProps: { value: _vm.email },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.email = $event.target.value
-                                        }
-                                      }
-                                    })
-                                  ])
-                                : _c("div", [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.email,
-                                          expression: "email"
-                                        }
-                                      ],
-                                      staticClass: "form-control is-valid",
-                                      attrs: { type: "email" },
-                                      domProps: { value: _vm.email },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.email = $event.target.value
-                                        }
-                                      }
-                                    })
-                                  ])
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.email,
+                                    expression: "email"
+                                  }
+                                ],
+                                ref: "emailInput",
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.invalidEmail,
+                                  "is-valid": !_vm.invalidEmail
+                                },
+                                attrs: { type: "email" },
+                                domProps: { value: _vm.email },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.email = $event.target.value
+                                  }
+                                }
+                              })
                             ])
                           ])
                         ])
@@ -75719,9 +75636,7 @@ var staticRenderFns = [
             _c("div", { staticClass: "breadcrumb-wrapper col-12" }, [
               _c("ol", { staticClass: "breadcrumb" }, [
                 _c("li", { staticClass: "breadcrumb-item" }, [
-                  _vm._v(
-                    "Lista de proveedores\n                                  "
-                  )
+                  _vm._v("Lista de proveedores\n                  ")
                 ])
               ])
             ])
@@ -77213,7 +77128,7 @@ var render = function() {
                         _vm._v("Impuestos(*)")
                       ]),
                       _vm._v(" "),
-                      _vm.impuesto == 0 || !_vm.impuesto
+                      _vm.impuesto == 0 || !_vm.impuesto || _vm.impuesto < 0
                         ? _c("div", [
                             _c("input", {
                               directives: [
@@ -77690,6 +77605,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: { "is-valid": _vm.precio <= 0 },
                           staticStyle: { "background-color": "#0B1044" },
                           attrs: {
                             type: "number",
@@ -77740,6 +77656,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: { "is-valid": _vm.cantidad <= 0 },
                           staticStyle: { "background-color": "#0B1044" },
                           attrs: { type: "number", placeholder: "2" },
                           domProps: { value: _vm.cantidad },
@@ -77772,6 +77689,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: { "is-invalid": _vm.descuento < 0 },
                           staticStyle: { "background-color": "#0B1044" },
                           attrs: { type: "number", placeholder: "2" },
                           domProps: { value: _vm.descuento },
@@ -77872,12 +77790,16 @@ var render = function() {
                                             directives: [
                                               {
                                                 name: "model",
-                                                rawName: "v-model",
+                                                rawName: "v-model:number",
                                                 value: detalle.precio,
-                                                expression: "detalle.precio"
+                                                expression: "detalle.precio",
+                                                arg: "number"
                                               }
                                             ],
                                             staticClass: "form-control",
+                                            class: {
+                                              "is-invalid": detalle.precio <= 0
+                                            },
                                             attrs: { type: "number" },
                                             domProps: { value: detalle.precio },
                                             on: {
@@ -77924,12 +77846,17 @@ var render = function() {
                                             directives: [
                                               {
                                                 name: "model",
-                                                rawName: "v-model",
+                                                rawName: "v-model:number",
                                                 value: detalle.cantidad,
-                                                expression: "detalle.cantidad"
+                                                expression: "detalle.cantidad",
+                                                arg: "number"
                                               }
                                             ],
                                             staticClass: "form-control",
+                                            class: {
+                                              "is-invalid":
+                                                detalle.cantidad <= 0
+                                            },
                                             attrs: { type: "number" },
                                             domProps: {
                                               value: detalle.cantidad
@@ -77974,12 +77901,17 @@ var render = function() {
                                             directives: [
                                               {
                                                 name: "model",
-                                                rawName: "v-model",
+                                                rawName: "v-model:number",
                                                 value: detalle.descuento,
-                                                expression: "detalle.descuento"
+                                                expression: "detalle.descuento",
+                                                arg: "number"
                                               }
                                             ],
                                             staticClass: "form-control",
+                                            class: {
+                                              "is-invalid":
+                                                detalle.descuento < 0
+                                            },
                                             attrs: { type: "number" },
                                             domProps: {
                                               value: detalle.descuento
@@ -78734,7 +78666,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Opciones")]),
+        _c("th", [_vm._v("Opcione")]),
         _vm._v(" "),
         _c("th", [_vm._v("Productos")]),
         _vm._v(" "),

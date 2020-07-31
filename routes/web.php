@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('pdf', function(){
+  return view('pdf.productospdf');
+});
+
 Route::get('/main', function () {
         return view('menu/contenido');
     })->name('main');

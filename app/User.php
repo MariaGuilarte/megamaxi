@@ -16,7 +16,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'idrol','nombre','apellido','telefono','direccion','usuario','password','estado'
+        'idrol','nombre','apellido','telefono','direccion','usuario','password','estado','profile_picture'
+    ];
+    
+    protected $casts = [
+      'profile_picture' => 'array'
     ];
 
     /**
@@ -30,5 +34,12 @@ class User extends Authenticatable
 
      public function rol(){
         return $this->belongsTo('App\Rol');
+    }
+    
+    public function getAvatarAttribute(){
+      if( array_key_exists('url', $this->profile_picture ?: []) ){
+        return $this->profile_picture['url'];
+      }
+      return '/img/avatar-default.png';
     }
 }
