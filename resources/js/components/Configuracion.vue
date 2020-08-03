@@ -72,10 +72,10 @@
                   <div class="card-body">
                     <div class="tab-content">
                       <!-- inicio de configuracion general -->
-                      <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true" v-for="userg in general" :key="userg.id">
+                      <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true" v-if="general.id" :key="general.id">
                         <div class="media">
                           <a href="javascript: void(0);">
-                            <img :src="avatarUrl" class="rounded mr-75" alt="profile image" height="64" width="64">
+                            <img :src="general.avatar" class="rounded mr-75" alt="profile image" height="64" width="64">
                           </a>
                           <div class="media-body mt-75">
                             <div class="col-12 px-0 d-flex flex-sm-row flex-column justify-content-start">
@@ -94,9 +94,9 @@
                               <div class="col-12">
                                 <div class="form-group">
                                   <div class="controls">
-                                    <input type="hidden"  v-model="userg.idrol">
+                                    <input type="hidden"  v-model="general.idrol">
                                     <label for="account-username">Nombre</label>
-                                    <input type="text" class="form-control"  placeholder="Escriba sus nombres" v-model="userg.nombre">
+                                    <input type="text" class="form-control"  placeholder="Escriba sus nombres" v-model="general.nombre">
                                   </div>
                                 </div>
                               </div>
@@ -104,7 +104,7 @@
                                 <div class="form-group">
                                   <div class="controls">
                                     <label for="account-name">Apellido</label>
-                                    <input type="text" class="form-control" placeholder="Escriba sus apellidos" v-model="userg.apellido">
+                                    <input type="text" class="form-control" placeholder="Escriba sus apellidos" v-model="general.apellido">
                                   </div>
                                 </div>
                               </div>
@@ -112,21 +112,21 @@
                                 <div class="form-group">
                                   <div class="controls">
                                     <label for="account-e-mail">Telefono</label>
-                                    <input type="text" class="form-control"  placeholder="Escriba su telefono" v-model="userg.telefono">
+                                    <input type="text" class="form-control"  placeholder="Escriba su telefono" v-model="general.telefono">
                                   </div>
                                 </div>
                               </div>
                               <div class="col-12">
                                 <div class="form-group">
                                   <label for="account-company">Dirección</label>
-                                  <input type="text" class="form-control"  placeholder="Escriba su dirección de domicilio" v-model="userg.direccion">
+                                  <input type="text" class="form-control"  placeholder="Escriba su dirección de domicilio" v-model="general.direccion">
                                 </div>
                               </div>
                               <div class="col-12">
                                 <div class="form-group">
-                                  <input type="hidden"  v-model="userg.password">
+                                  <input type="hidden"  v-model="general.password">
                                   <label for="account-company">Nombre de Usuario</label>
-                                  <input type="text" class="form-control"  placeholder="Escriba su nombre de usuario" v-model="userg.usuario">
+                                  <input type="text" class="form-control"  placeholder="Escriba su nombre de usuario" v-model="general.usuario">
                                 </div>
                               </div>
                               <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
@@ -136,8 +136,8 @@
                             </div>
                           </form>
                         </div>
-                        <!--fin de configuracion general----->
-                        <!--inicio de configuracion de contraseña---->
+                        <!--fin de configuracion general-->
+                        <!--inicio de configuracion de contraseña-->
                         <div class="tab-pane fade " id="account-vertical-password" role="tabpanel" aria-labelledby="account-pill-password" aria-expanded="false">
                           <form novalidate>
                             <div class="row">
@@ -267,8 +267,8 @@
                               </div>
                             </form>
                           </div>
-                          <!-- fin de configuracion de informacion adicional--->
-                          <!--inicio de configuracion de redes----->
+                          <!-- fin de configuracion de informacion adicional-->
+                          <!--inicio de configuracion de redes-->
                           <div class="tab-pane fade " id="account-vertical-social" role="tabpanel" aria-labelledby="account-pill-social" aria-expanded="false">
                           <form>
                           <div class="row">
@@ -316,7 +316,7 @@
 </div>
 </form>
 </div>
-<!--fin de configuracion de redes sociales------->
+<!--fin de configuracion de redes sociales-->
 </div>
 </div>
 </div>
@@ -333,7 +333,7 @@
 export default {
   data(){
     return{
-      general:[],
+      general:{},
       listado:0,
       nombre:'',
       apellido:'',
@@ -348,57 +348,44 @@ export default {
   },
   computed:{
     avatarUrl(){
-      if(this.general.length){
-        return this.general[0].profile_picture.url ? this.general[0].profile_picture.url : '/img/avatar-default.png'
+      if(this.general.id){
+        return this.general.avatar 
       }
-      return this.general.usuarios.profile_picture.url ? this.general.usuarios.profile_picture.url : '/img/avatar-default.png'
     }
   },
   methods : {
     changePicture(){
-      this.profilePicture = this.$refs.profilePictureInput[0].files[0]
+      this.profilePicture = this.$refs.profilePictureInput.files[0]
     },
     listargeneral(){
       let me  = this;
       var url = '/usuario/cambiosgeneral';
-      axios.get(url).then(function (response) {
-        var respuesta = response.data;
-        me.general = respuesta.usuarios;
+      axios.get(url).then(function(response){
+        me.general = response.data.data;
         // me.pagination= respuesta.pagination;
         //me.arrayUsuario = response.data;
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(e=>console.log(e))
     },
-    //---------------------------------------------------------------------------------------------------------------------------------------------------------
     actualizargeneral(){
       let me = this;
       let data = new FormData();
-      data.set('nombre', me.general[0].nombre)
-      data.set('apellido', me.general[0].apellido)
-      data.set('telefono', me.general[0].telefono)
-      data.set('direccion', me.general[0].direccion)
-      data.set('usuario', me.general[0].usuario)
-      data.set('idrol', me.general[0].idrol)
-      data.set('id', me.general[0].id)
-      data.set('password', me.password)
+      let excluded = ['estado','profile_picture']
+      Object.keys( me.general ).forEach(key => !excluded.includes(key) ? data.set(key, me.general[key]) : '')
       data.set('_method', 'PUT')
       data.append('profile_picture', me.profilePicture)
       
       axios.post('/usuario/actualizarcambiosgeneral',data).then(function (response) {
-        me.general = response.data
-        document.querySelector('#navbar-user-profile-img').setAttribute('src', me.avatarUrl);
+        me.general = response.data.data
+        document.querySelector('#navbar-user-profile-img').setAttribute('src', me.general.avatar);
         
-        document.querySelector('#navbar-username').innerText = me.general[0].nombre + " " + me.general[0].apellido;
+        document.querySelector('#navbar-username').innerText = me.general.nombre + " " + me.general.apellido;
         swal(
           'Actualizado!',
           'El registro se ha actualizado de forma exitosa.',
           'success'
         )
-      }).catch(function (error) {
-        console.log(error);
-      }); 
+      }).catch(e=>console.log(e)); 
     },
     cambiarGeneral(){
       this.listado=0;

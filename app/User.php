@@ -19,6 +19,8 @@ class User extends Authenticatable
         'idrol','nombre','apellido','telefono','direccion','usuario','password','estado','profile_picture'
     ];
     
+    protected $appends = ['avatar'];
+    
     protected $casts = [
       'profile_picture' => 'array'
     ];
@@ -37,8 +39,8 @@ class User extends Authenticatable
     }
     
     public function getAvatarAttribute(){
-      if( array_key_exists('url', $this->profile_picture ?: []) ){
-        return $this->profile_picture['url'];
+      if( array_key_exists('url', $this->profile_picture ?: [] ) ){
+        return '/' . $this->profile_picture['url'];
       }
       return '/img/avatar-default.png';
     }

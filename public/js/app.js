@@ -3046,7 +3046,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      general: [],
+      general: {},
       listado: 0,
       nombre: '',
       apellido: '',
@@ -3061,49 +3061,41 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     avatarUrl: function avatarUrl() {
-      if (this.general.length) {
-        return this.general[0].profile_picture.url ? this.general[0].profile_picture.url : '/img/avatar-default.png';
+      if (this.general.id) {
+        return this.general.avatar;
       }
-
-      return this.general.usuarios.profile_picture.url ? this.general.usuarios.profile_picture.url : '/img/avatar-default.png';
     }
   },
   methods: {
     changePicture: function changePicture() {
-      this.profilePicture = this.$refs.profilePictureInput[0].files[0];
+      this.profilePicture = this.$refs.profilePictureInput.files[0];
     },
     listargeneral: function listargeneral() {
       var me = this;
       var url = '/usuario/cambiosgeneral';
       axios.get(url).then(function (response) {
-        var respuesta = response.data;
-        me.general = respuesta.usuarios; // me.pagination= respuesta.pagination;
+        me.general = response.data.data; // me.pagination= respuesta.pagination;
         //me.arrayUsuario = response.data;
-      })["catch"](function (error) {
-        console.log(error);
+      })["catch"](function (e) {
+        return console.log(e);
       });
     },
-    //---------------------------------------------------------------------------------------------------------------------------------------------------------
     actualizargeneral: function actualizargeneral() {
       var me = this;
       var data = new FormData();
-      data.set('nombre', me.general[0].nombre);
-      data.set('apellido', me.general[0].apellido);
-      data.set('telefono', me.general[0].telefono);
-      data.set('direccion', me.general[0].direccion);
-      data.set('usuario', me.general[0].usuario);
-      data.set('idrol', me.general[0].idrol);
-      data.set('id', me.general[0].id);
-      data.set('password', me.password);
+      var excluded = ['estado', 'profile_picture'];
+      Object.keys(me.general).forEach(function (key) {
+        return !excluded.includes(key) ? data.set(key, me.general[key]) : '';
+      });
       data.set('_method', 'PUT');
       data.append('profile_picture', me.profilePicture);
       axios.post('/usuario/actualizarcambiosgeneral', data).then(function (response) {
-        me.general = response.data;
-        document.querySelector('#navbar-user-profile-img').setAttribute('src', me.avatarUrl);
-        document.querySelector('#navbar-username').innerText = me.general[0].nombre + " " + me.general[0].apellido;
+        me.general = response.data.data;
+        document.querySelector('#navbar-user-profile-img').setAttribute('src', me.general.avatar);
+        document.querySelector('#navbar-username').innerText = me.general.nombre + " " + me.general.apellido;
         swal('Actualizado!', 'El registro se ha actualizado de forma exitosa.', 'success');
-      })["catch"](function (error) {
-        console.log(error);
+      })["catch"](function (e) {
+        return console.log(e);
       });
     },
     cambiarGeneral: function cambiarGeneral() {
@@ -70785,15 +70777,12 @@ var render = function() {
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-content" }, [
                   _c("div", { staticClass: "card-body" }, [
-                    _c(
-                      "div",
-                      { staticClass: "tab-content" },
-                      [
-                        _vm._l(_vm.general, function(userg) {
-                          return _c(
+                    _c("div", { staticClass: "tab-content" }, [
+                      _vm.general.id
+                        ? _c(
                             "div",
                             {
-                              key: userg.id,
+                              key: _vm.general.id,
                               staticClass: "tab-pane active",
                               attrs: {
                                 role: "tabpanel",
@@ -70811,7 +70800,7 @@ var render = function() {
                                     _c("img", {
                                       staticClass: "rounded mr-75",
                                       attrs: {
-                                        src: _vm.avatarUrl,
+                                        src: _vm.general.avatar,
                                         alt: "profile image",
                                         height: "64",
                                         width: "64"
@@ -70840,7 +70829,6 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("input", {
                                         ref: "profilePictureInput",
-                                        refInFor: true,
                                         attrs: {
                                           type: "file",
                                           id: "account-upload",
@@ -70860,7 +70848,7 @@ var render = function() {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _vm._m(0, true)
+                                  _vm._m(0)
                                 ])
                               ]),
                               _vm._v(" "),
@@ -70876,19 +70864,21 @@ var render = function() {
                                             {
                                               name: "model",
                                               rawName: "v-model",
-                                              value: userg.idrol,
-                                              expression: "userg.idrol"
+                                              value: _vm.general.idrol,
+                                              expression: "general.idrol"
                                             }
                                           ],
                                           attrs: { type: "hidden" },
-                                          domProps: { value: userg.idrol },
+                                          domProps: {
+                                            value: _vm.general.idrol
+                                          },
                                           on: {
                                             input: function($event) {
                                               if ($event.target.composing) {
                                                 return
                                               }
                                               _vm.$set(
-                                                userg,
+                                                _vm.general,
                                                 "idrol",
                                                 $event.target.value
                                               )
@@ -70909,8 +70899,8 @@ var render = function() {
                                             {
                                               name: "model",
                                               rawName: "v-model",
-                                              value: userg.nombre,
-                                              expression: "userg.nombre"
+                                              value: _vm.general.nombre,
+                                              expression: "general.nombre"
                                             }
                                           ],
                                           staticClass: "form-control",
@@ -70918,14 +70908,16 @@ var render = function() {
                                             type: "text",
                                             placeholder: "Escriba sus nombres"
                                           },
-                                          domProps: { value: userg.nombre },
+                                          domProps: {
+                                            value: _vm.general.nombre
+                                          },
                                           on: {
                                             input: function($event) {
                                               if ($event.target.composing) {
                                                 return
                                               }
                                               _vm.$set(
-                                                userg,
+                                                _vm.general,
                                                 "nombre",
                                                 $event.target.value
                                               )
@@ -70950,8 +70942,8 @@ var render = function() {
                                             {
                                               name: "model",
                                               rawName: "v-model",
-                                              value: userg.apellido,
-                                              expression: "userg.apellido"
+                                              value: _vm.general.apellido,
+                                              expression: "general.apellido"
                                             }
                                           ],
                                           staticClass: "form-control",
@@ -70959,14 +70951,16 @@ var render = function() {
                                             type: "text",
                                             placeholder: "Escriba sus apellidos"
                                           },
-                                          domProps: { value: userg.apellido },
+                                          domProps: {
+                                            value: _vm.general.apellido
+                                          },
                                           on: {
                                             input: function($event) {
                                               if ($event.target.composing) {
                                                 return
                                               }
                                               _vm.$set(
-                                                userg,
+                                                _vm.general,
                                                 "apellido",
                                                 $event.target.value
                                               )
@@ -70991,8 +70985,8 @@ var render = function() {
                                             {
                                               name: "model",
                                               rawName: "v-model",
-                                              value: userg.telefono,
-                                              expression: "userg.telefono"
+                                              value: _vm.general.telefono,
+                                              expression: "general.telefono"
                                             }
                                           ],
                                           staticClass: "form-control",
@@ -71000,14 +70994,16 @@ var render = function() {
                                             type: "text",
                                             placeholder: "Escriba su telefono"
                                           },
-                                          domProps: { value: userg.telefono },
+                                          domProps: {
+                                            value: _vm.general.telefono
+                                          },
                                           on: {
                                             input: function($event) {
                                               if ($event.target.composing) {
                                                 return
                                               }
                                               _vm.$set(
-                                                userg,
+                                                _vm.general,
                                                 "telefono",
                                                 $event.target.value
                                               )
@@ -71031,8 +71027,8 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
-                                            value: userg.direccion,
-                                            expression: "userg.direccion"
+                                            value: _vm.general.direccion,
+                                            expression: "general.direccion"
                                           }
                                         ],
                                         staticClass: "form-control",
@@ -71041,14 +71037,16 @@ var render = function() {
                                           placeholder:
                                             "Escriba su dirección de domicilio"
                                         },
-                                        domProps: { value: userg.direccion },
+                                        domProps: {
+                                          value: _vm.general.direccion
+                                        },
                                         on: {
                                           input: function($event) {
                                             if ($event.target.composing) {
                                               return
                                             }
                                             _vm.$set(
-                                              userg,
+                                              _vm.general,
                                               "direccion",
                                               $event.target.value
                                             )
@@ -71065,19 +71063,21 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
-                                            value: userg.password,
-                                            expression: "userg.password"
+                                            value: _vm.general.password,
+                                            expression: "general.password"
                                           }
                                         ],
                                         attrs: { type: "hidden" },
-                                        domProps: { value: userg.password },
+                                        domProps: {
+                                          value: _vm.general.password
+                                        },
                                         on: {
                                           input: function($event) {
                                             if ($event.target.composing) {
                                               return
                                             }
                                             _vm.$set(
-                                              userg,
+                                              _vm.general,
                                               "password",
                                               $event.target.value
                                             )
@@ -71096,8 +71096,8 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
-                                            value: userg.usuario,
-                                            expression: "userg.usuario"
+                                            value: _vm.general.usuario,
+                                            expression: "general.usuario"
                                           }
                                         ],
                                         staticClass: "form-control",
@@ -71106,14 +71106,16 @@ var render = function() {
                                           placeholder:
                                             "Escriba su nombre de usuario"
                                         },
-                                        domProps: { value: userg.usuario },
+                                        domProps: {
+                                          value: _vm.general.usuario
+                                        },
                                         on: {
                                           input: function($event) {
                                             if ($event.target.composing) {
                                               return
                                             }
                                             _vm.$set(
-                                              userg,
+                                              _vm.general,
                                               "usuario",
                                               $event.target.value
                                             )
@@ -71160,16 +71162,14 @@ var render = function() {
                               ])
                             ]
                           )
-                        }),
-                        _vm._v(" "),
-                        _vm._m(1),
-                        _vm._v(" "),
-                        _vm._m(2),
-                        _vm._v(" "),
-                        _vm._m(3)
-                      ],
-                      2
-                    )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _vm._m(3)
+                    ])
                   ])
                 ])
               ])

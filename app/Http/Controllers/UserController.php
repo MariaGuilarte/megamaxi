@@ -24,10 +24,8 @@ class UserController extends Controller
     if (!$request->ajax()) return redirect('/');
     $id = \Auth::user()->id;
     $usuarios = User::where('estado','=','1')
-    ->where('id','=',$id)->get();
-    return [
-      'usuarios' => $usuarios
-    ];
+    ->where('id','=',$id)->first();
+    return response()->json(['data' => $usuarios]);
   }
   public function actualizarcambiosgeneral(Request $request)
   {
@@ -45,9 +43,7 @@ class UserController extends Controller
     $usuarios->estado = '1';
     $usuarios->profile_picture = $new_picture ?: $usuarios->profile_picture;
     $usuarios->save();
-    return [
-      'usuarios' => $usuarios
-    ];
+    return response()->json(['data'=>$usuarios]);
   }
   public function store(Request $request)
   {
